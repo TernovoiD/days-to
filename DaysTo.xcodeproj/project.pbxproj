@@ -8,21 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		81A79F82297D450600AC14F9 /* DaysToApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A79F81297D450600AC14F9 /* DaysToApp.swift */; };
-		81A79F84297D450600AC14F9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A79F83297D450600AC14F9 /* ContentView.swift */; };
 		81A79F86297D450700AC14F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A79F85297D450700AC14F9 /* Assets.xcassets */; };
 		81A79F89297D450700AC14F9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A79F88297D450700AC14F9 /* Preview Assets.xcassets */; };
-		81A79F8B297D450700AC14F9 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A79F8A297D450700AC14F9 /* Persistence.swift */; };
-		81A79F8E297D450700AC14F9 /* DaysTo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81A79F8C297D450700AC14F9 /* DaysTo.xcdatamodeld */; };
+		81A79F99297D4DE500AC14F9 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A79F98297D4DE500AC14F9 /* EventModel.swift */; };
+		81A79F9B297D543300AC14F9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A79F9A297D543300AC14F9 /* HomeView.swift */; };
+		81A79F9E297D54B000AC14F9 /* EventsContainer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81A79F9C297D54B000AC14F9 /* EventsContainer.xcdatamodeld */; };
+		81A79FA0297D54CE00AC14F9 /* EventsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A79F9F297D54CE00AC14F9 /* EventsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		81A79F7E297D450600AC14F9 /* DaysTo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaysTo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81A79F81297D450600AC14F9 /* DaysToApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysToApp.swift; sourceTree = "<group>"; };
-		81A79F83297D450600AC14F9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		81A79F85297D450700AC14F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		81A79F88297D450700AC14F9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		81A79F8A297D450700AC14F9 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		81A79F8D297D450700AC14F9 /* DaysTo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DaysTo.xcdatamodel; sourceTree = "<group>"; };
+		81A79F98297D4DE500AC14F9 /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
+		81A79F9A297D543300AC14F9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		81A79F9D297D54B000AC14F9 /* EventsContainer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EventsContainer.xcdatamodel; sourceTree = "<group>"; };
+		81A79F9F297D54CE00AC14F9 /* EventsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,11 +58,10 @@
 			isa = PBXGroup;
 			children = (
 				81A79F81297D450600AC14F9 /* DaysToApp.swift */,
-				81A79F83297D450600AC14F9 /* ContentView.swift */,
-				81A79F85297D450700AC14F9 /* Assets.xcassets */,
-				81A79F8A297D450700AC14F9 /* Persistence.swift */,
-				81A79F8C297D450700AC14F9 /* DaysTo.xcdatamodeld */,
-				81A79F87297D450700AC14F9 /* Preview Content */,
+				81A79F97297D4A5900AC14F9 /* Views */,
+				81A79F96297D4A5000AC14F9 /* ViewModels */,
+				81A79F95297D4A4300AC14F9 /* Models */,
+				81A79F94297D498400AC14F9 /* Resources */,
 			);
 			path = DaysTo;
 			sourceTree = "<group>";
@@ -71,6 +72,40 @@
 				81A79F88297D450700AC14F9 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		81A79F94297D498400AC14F9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				81A79F9C297D54B000AC14F9 /* EventsContainer.xcdatamodeld */,
+				81A79F85297D450700AC14F9 /* Assets.xcassets */,
+				81A79F87297D450700AC14F9 /* Preview Content */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		81A79F95297D4A4300AC14F9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				81A79F98297D4DE500AC14F9 /* EventModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		81A79F96297D4A5000AC14F9 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				81A79F9F297D54CE00AC14F9 /* EventsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		81A79F97297D4A5900AC14F9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				81A79F9A297D543300AC14F9 /* HomeView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,10 +178,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				81A79F8B297D450700AC14F9 /* Persistence.swift in Sources */,
-				81A79F84297D450600AC14F9 /* ContentView.swift in Sources */,
+				81A79FA0297D54CE00AC14F9 /* EventsViewModel.swift in Sources */,
+				81A79F9E297D54B000AC14F9 /* EventsContainer.xcdatamodeld in Sources */,
+				81A79F9B297D543300AC14F9 /* HomeView.swift in Sources */,
 				81A79F82297D450600AC14F9 /* DaysToApp.swift in Sources */,
-				81A79F8E297D450700AC14F9 /* DaysTo.xcdatamodeld in Sources */,
+				81A79F99297D4DE500AC14F9 /* EventModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,7 +310,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"DaysTo/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "DaysTo/Resources/Preview\\ Content";
 				DEVELOPMENT_TEAM = MWQ8P93RWJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -303,7 +339,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"DaysTo/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "DaysTo/Resources/Preview\\ Content";
 				DEVELOPMENT_TEAM = MWQ8P93RWJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -349,13 +385,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		81A79F8C297D450700AC14F9 /* DaysTo.xcdatamodeld */ = {
+		81A79F9C297D54B000AC14F9 /* EventsContainer.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				81A79F8D297D450700AC14F9 /* DaysTo.xcdatamodel */,
+				81A79F9D297D54B000AC14F9 /* EventsContainer.xcdatamodel */,
 			);
-			currentVersion = 81A79F8D297D450700AC14F9 /* DaysTo.xcdatamodel */;
-			path = DaysTo.xcdatamodeld;
+			currentVersion = 81A79F9D297D54B000AC14F9 /* EventsContainer.xcdatamodel */;
+			path = EventsContainer.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
