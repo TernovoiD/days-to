@@ -12,36 +12,34 @@ struct Event: Identifiable {
     var name: String
     var description: String
     var dateInfo: DateInformation
-    var status: EventStatus
+    var isFavorite: Bool
     
     var isValid: Bool {
         !name.isEmpty
     }
     
-    init(name: String, description: String, dateInfo: DateInformation, status: EventStatus) {
+    init(name: String, description: String, dateInfo: DateInformation, isFavorite: Bool) {
         self.name = name
         self.description = description
         self.dateInfo = dateInfo
-        self.status = status
+        self.isFavorite = isFavorite
     }
     
     init() {
-        self.init(name: "Name", description: "Description", dateInfo: DateInformation(), status: .normal)
-    }
-    
-    enum EventStatus {
-        case normal
-        case favorite
-        case nonActual
+        self.init(name: "Name", description: "Description", dateInfo: DateInformation(), isFavorite: false)
     }
 }
 
 struct DateInformation {
-    var originalDate: Date
-    var repeatingInterval: DateInterval
+    let originalDate: Date
+    var repeatAnnually: Bool
     
     private var isFutureEvent: Bool {
         originalDate >= Date() ? true : false
+    }
+    
+    var isActual: Bool {
+        if isFutureEvent || repeatAnnually { return true } else { return false }
     }
     
     var nextCelebrationDate: Date {
@@ -58,10 +56,15 @@ struct DateInformation {
     }
     
     var daysLeftToEvent: Int {
-        let calendar: Calendar = Calendar.current
-        let today = calendar.startOfDay(for: Date())
-        let calebrationDay = calendar.startOfDay(for: nextCelebrationDate)
-        return calendar.dateComponents([.day], from: today, to: calebrationDay).day ?? 999
+        switch isActual {
+        case true:
+                let calendar: Calendar = Calendar.current
+                let today = calendar.startOfDay(for: Date())
+                let calebrationDay = calendar.startOfDay(for: nextCelebrationDate)
+                return calendar.dateComponents([.day], from: today, to: calebrationDay).day ?? 999
+        case false:
+            return 999
+        }
     }
     
     enum DateInterval {
@@ -69,24 +72,24 @@ struct DateInformation {
         case none
     }
     
-    init(originalDate: Date, repeatingInterval: DateInterval) {
+    init(originalDate: Date, repeatAnnually: Bool) {
         self.originalDate = originalDate
-        self.repeatingInterval = repeatingInterval
+        self.repeatAnnually = repeatAnnually
     }
     
     init() {
-        self.init(originalDate: Date(), repeatingInterval: .annual)
+        self.init(originalDate: Date(), repeatAnnually: true)
     }
 }
 
 extension Event {
     static let testEvents: [Event] = [
-        Event(name: "Test One", description: "Test Description", dateInfo: DateInformation(), status: .normal),
-        Event(name: "Test Two", description: "Test Description", dateInfo: DateInformation(), status: .normal),
-        Event(name: "Test Three", description: "Test Description", dateInfo: DateInformation(), status: .normal),
-        Event(name: "Test Four", description: "Test Description", dateInfo: DateInformation(), status: .normal),
-        Event(name: "Test Five", description: "Test Description", dateInfo: DateInformation(), status: .favorite),
-        Event(name: "Test Six", description: "Test Description", dateInfo: DateInformation(), status: .nonActual),
-        Event(name: "Test Seven", description: "Test Description", dateInfo: DateInformation(), status: .normal)
+        Event(name: "Test One", description: "Test Description", dateInfo: DateInformation(), isFavorite: false),
+        Event(name: "Test Two", description: "Test Description", dateInfo: DateInformation(), isFavorite: false),
+        Event(name: "Test Three", description: "Test Description", dateInfo: DateInformation(), isFavorite: true),
+        Event(name: "Test Four", description: "Test Description", dateInfo: DateInformation(), isFavorite: false),
+        Event(name: "Test Five", description: "Test Description", dateInfo: DateInformation(), isFavorite: false),
+        Event(name: "Test Six", description: "Test Description", dateInfo: DateInformation(), isFavorite: false),
+        Event(name: "Test Seven", description: "Test Description", dateInfo: DateInformation(), isFavorite: false)
     ]
 }
