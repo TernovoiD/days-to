@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22C65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier=""/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="22C65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="EventEntity" representedClassName="EventEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="favorite" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="info" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="repeatAnnual" attributeType="Boolean" usesScalarValueType="YES"/>
+        <relationship name="tags" toMany="YES" deletionRule="Nullify" destinationEntity="TagEntity" inverseName="events" inverseEntity="TagEntity"/>
+    </entity>
+    <entity name="TagEntity" representedClassName="TagEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="color" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="events" toMany="YES" deletionRule="Nullify" destinationEntity="EventEntity" inverseName="tags" inverseEntity="EventEntity"/>
+    </entity>
+</model>
