@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct DaysToApp: App {
+    
+    @StateObject var eventsVM: EventsViewModel = EventsViewModel()
+    
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .environmentObject(eventsVM)
         }
     }
 }

@@ -10,30 +10,32 @@ import CoreData
 
 class EventsViewModel: ObservableObject {
     
-    @Published var events: [EventEntity] = []
-    @Published var tags: [TagEntity] = []
+    @Published var events: [Event] = []
     let container: NSPersistentContainer
     
+    static let shared = EventsViewModel()
+    
     var viewContext: NSManagedObjectContext {
-        return container.viewContext
+        container.viewContext
     }
     
     init() {
-        container = NSPersistentContainer(name: "EventsContainer")
+        container = NSPersistentContainer(name: "DataContainer")
         container.loadPersistentStores { (description, error) in
             if let error = error {
-                print("Error while loading EventsContainer: \(error)")
+                print("Error while loading DataContainer: \(error)")
             }
         }
-        fetchData()
+        fetchEvents()
     }
     
-    func fetchData() {
-        let requestEvents = NSFetchRequest<EventEntity>(entityName: "EventEntity")
-        let requestTags = NSFetchRequest<TagEntity>(entityName: "TagEntity")
+    func fetchEvents() {
+        let request = NSFetchRequest<EventEntity>(entityName: "EventEntity")
         do {
-            events = try viewContext.fetch(requestEvents)
-            tags = try viewContext.fetch(requestTags)
+            let allEvents = try viewContext.fetch(request).map(Event.init)
+            events = allEvents
+                .sorted(by: { $0.daysLeftToEvent < $1.daysLeftToEvent })
+                .filter({ $0.isActual })
         } catch let error {
             print("Error while fetch Events: \(error)")
         }
@@ -42,40 +44,26 @@ class EventsViewModel: ObservableObject {
     func saveData() {
         do {
             try viewContext.save()
-            fetchData()
         } catch let error {
             print("Error while saving Events: \(error)")
         }
+        fetchEvents()
     }
     
-    func addEvent(name: String, description: String, date: Date, repeatAnnual: Bool, isFavorite: Bool) {
-        let newEvent = EventEntity(context: viewContext)
-        newEvent.name = name
-        newEvent.info = description
-        newEvent.date = date
-        newEvent.repeatAnnual = repeatAnnual
-        newEvent.favorite = isFavorite
+    func addEvent(withName name: String, andInformation information: String, andDate date: Date, andFavoriteStatus isFavorite: Bool, andRepeatStatus isRepeated: Bool) {
+        let newEntity = EventEntity(context: viewContext)
+        newEntity.eventID = UUID()
+        newEntity.nameOfEvent = name
+        newEntity.information = information
+        newEntity.originalDate = date
+        newEntity.isFavorite = isFavorite
+        newEntity.isRepeated = isRepeated
         saveData()
     }
     
-    func addTag(name: String, color: String) {
-        let newTag = TagEntity(context: viewContext)
-        newTag.name = name
-        newTag.color = color
-        saveData()
-    }
-    
-    func deleteEvent(withIndex IndexSet: IndexSet) {
-        guard let eventIndex = IndexSet.first else { return }
-        let event = events[eventIndex]
-        viewContext.delete(event)
-        saveData()
-    }
-    
-    func deleteTag(withIndex IndexSet: IndexSet) {
-        guard let tagIndex = IndexSet.first else { return }
-        let tag = tags[tagIndex]
-        viewContext.delete(tag)
+    func deleteEvent(_ event: Event) {
+        let eventEntity = event.entity
+        viewContext.delete(eventEntity)
         saveData()
     }
 }
