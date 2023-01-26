@@ -7,24 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		81768FFD29828B5F00CC403C /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81768FFC29828B5F00CC403C /* AddEventView.swift */; };
+		81768FFF2982974D00CC403C /* EventRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81768FFE2982974D00CC403C /* EventRowView.swift */; };
 		81A79F82297D450600AC14F9 /* DaysToApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A79F81297D450600AC14F9 /* DaysToApp.swift */; };
 		81A79F86297D450700AC14F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A79F85297D450700AC14F9 /* Assets.xcassets */; };
 		81A79F89297D450700AC14F9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81A79F88297D450700AC14F9 /* Preview Assets.xcassets */; };
 		81A79F99297D4DE500AC14F9 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A79F98297D4DE500AC14F9 /* EventModel.swift */; };
 		81A79F9B297D543300AC14F9 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A79F9A297D543300AC14F9 /* HomeView.swift */; };
-		81A79F9E297D54B000AC14F9 /* EventsContainer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81A79F9C297D54B000AC14F9 /* EventsContainer.xcdatamodeld */; };
 		81A79FA0297D54CE00AC14F9 /* EventsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81A79F9F297D54CE00AC14F9 /* EventsViewModel.swift */; };
+		81D8FF1629818C76007A62C8 /* DataContainer.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 81EB1C1129813177000B12E3 /* DataContainer.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		81768FFC29828B5F00CC403C /* AddEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
+		81768FFE2982974D00CC403C /* EventRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventRowView.swift; sourceTree = "<group>"; };
 		81A79F7E297D450600AC14F9 /* DaysTo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DaysTo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81A79F81297D450600AC14F9 /* DaysToApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysToApp.swift; sourceTree = "<group>"; };
 		81A79F85297D450700AC14F9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		81A79F88297D450700AC14F9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		81A79F98297D4DE500AC14F9 /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
 		81A79F9A297D543300AC14F9 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		81A79F9D297D54B000AC14F9 /* EventsContainer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = EventsContainer.xcdatamodel; sourceTree = "<group>"; };
 		81A79F9F297D54CE00AC14F9 /* EventsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewModel.swift; sourceTree = "<group>"; };
+		81EB1C1229813177000B12E3 /* DataContainer.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataContainer.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +81,7 @@
 		81A79F94297D498400AC14F9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				81A79F9C297D54B000AC14F9 /* EventsContainer.xcdatamodeld */,
+				81EB1C1129813177000B12E3 /* DataContainer.xcdatamodeld */,
 				81A79F85297D450700AC14F9 /* Assets.xcassets */,
 				81A79F87297D450700AC14F9 /* Preview Content */,
 			);
@@ -104,6 +108,8 @@
 			isa = PBXGroup;
 			children = (
 				81A79F9A297D543300AC14F9 /* HomeView.swift */,
+				81768FFE2982974D00CC403C /* EventRowView.swift */,
+				81768FFC29828B5F00CC403C /* AddEventView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -179,9 +185,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				81A79FA0297D54CE00AC14F9 /* EventsViewModel.swift in Sources */,
-				81A79F9E297D54B000AC14F9 /* EventsContainer.xcdatamodeld in Sources */,
+				81768FFF2982974D00CC403C /* EventRowView.swift in Sources */,
+				81768FFD29828B5F00CC403C /* AddEventView.swift in Sources */,
 				81A79F9B297D543300AC14F9 /* HomeView.swift in Sources */,
 				81A79F82297D450600AC14F9 /* DaysToApp.swift in Sources */,
+				81D8FF1629818C76007A62C8 /* DataContainer.xcdatamodeld in Sources */,
 				81A79F99297D4DE500AC14F9 /* EventModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -314,11 +322,12 @@
 				DEVELOPMENT_TEAM = MWQ8P93RWJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -326,9 +335,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danyloternovoi.DaysTo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -343,11 +355,12 @@
 				DEVELOPMENT_TEAM = MWQ8P93RWJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -355,9 +368,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.danyloternovoi.DaysTo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -385,13 +401,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		81A79F9C297D54B000AC14F9 /* EventsContainer.xcdatamodeld */ = {
+		81EB1C1129813177000B12E3 /* DataContainer.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				81A79F9D297D54B000AC14F9 /* EventsContainer.xcdatamodel */,
+				81EB1C1229813177000B12E3 /* DataContainer.xcdatamodel */,
 			);
-			currentVersion = 81A79F9D297D54B000AC14F9 /* EventsContainer.xcdatamodel */;
-			path = EventsContainer.xcdatamodeld;
+			currentVersion = 81EB1C1229813177000B12E3 /* DataContainer.xcdatamodel */;
+			path = DataContainer.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
