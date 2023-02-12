@@ -10,12 +10,12 @@ import SwiftUI
 @main
 struct DaysToApp: App {
     
-    @StateObject var eventsVM: EventsViewModel = EventsViewModel()
+    @StateObject var daysToVM: DaysToViewModel = DaysToViewModel()
     
     var body: some Scene {
         WindowGroup {
             HomeView()
-                .environmentObject(eventsVM)
+                .environmentObject(daysToVM)
         }
     }
 }
