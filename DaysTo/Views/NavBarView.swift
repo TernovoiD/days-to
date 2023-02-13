@@ -11,6 +11,7 @@ struct NavBarView: View {
     var namespace: Namespace.ID
     var title: String = "Navigation Bar"
     @EnvironmentObject var daysToVM: DaysToViewModel
+    @EnvironmentObject var authentification: AuthentificationViewModel
     @Binding var hasScrolled: Bool
     @State var openMenu: Bool = false
     
@@ -47,9 +48,11 @@ struct NavBarView: View {
                     }
                 }
                 if openMenu {
-                    RoundedRectangle(cornerRadius: 1, style: .continuous)
-                        .frame(maxWidth: 70, maxHeight: 1)
-                        .opacity(0.5)
+//                    RoundedRectangle(cornerRadius: 1, style: .continuous)
+//                        .frame(maxWidth: 70, maxHeight: 1)
+//                        .opacity(0.5)
+                    Divider()
+                        .frame(maxWidth: 100)
                     Button {
                         withAnimation(.easeInOut) {
                             openMenu = false
@@ -65,6 +68,16 @@ struct NavBarView: View {
                         }
                     } label: {
                         Label("Settings", systemImage: "gear")
+                    }
+                    Divider()
+                        .frame(maxWidth: 100)
+                    Button {
+                        withAnimation(.easeInOut) {
+                            openMenu = false
+                            authentification.signOut()
+                        }
+                    } label: {
+                        Label("Sign Out", systemImage: "person")
                     }
                 }
             }
@@ -88,6 +101,7 @@ struct NavBarView_Previews: PreviewProvider {
     static var previews: some View {
         NavBarView(namespace: namespace, hasScrolled: .constant(true))
             .environmentObject(DaysToViewModel())
+            .environmentObject(AuthentificationViewModel())
             .background(
                 LinearGradient(colors: [.indigo, .purple], startPoint: .top, endPoint: .bottom)
             )

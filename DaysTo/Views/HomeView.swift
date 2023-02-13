@@ -8,14 +8,15 @@
 import SwiftUI
 
 struct HomeView: View {
-    var columns = [GridItem(.adaptive(minimum: 300), spacing: 20)]
-    @Namespace var namespace
+    @AppStorage("isSignedIn") var isSignedIn: Bool = false
+    @AppStorage("backgroundScheme") var backgroundScheme: String = "Background Purple Waves"
+    @EnvironmentObject var authentification: AuthentificationViewModel
     @EnvironmentObject var daysToVM: DaysToViewModel
+    @Namespace var namespace
     @State var hasScrolled: Bool = false
     @State var showStatusBar: Bool = true
     @State var backgroundScroll: CGFloat = 0
-    @AppStorage("backgroundScheme") var backgroundScheme: String = "Background Purple Waves"
-
+    var columns = [GridItem(.adaptive(minimum: 300), spacing: 20)]
     
     var body: some View {
         ZStack {
@@ -49,9 +50,9 @@ struct HomeView: View {
             .coordinateSpace(name: "scroll")
             .safeAreaInset(edge: .top, content: { Color.clear.frame(height: 70) })
             .overlay(NavBarView(namespace: namespace, title: "DaysTo", hasScrolled: $hasScrolled))
-            .scaleEffect(daysToVM.showAddEventView || daysToVM.showSettingsView ? 0.8 : 1)
+            .scaleEffect(daysToVM.showAddEventView || daysToVM.showSettingsView || !isSignedIn ? 0.8 : 1)
             
-            if daysToVM.showAddEventView || daysToVM.showSettingsView || daysToVM.showEditEventView {
+            if daysToVM.showAddEventView || daysToVM.showSettingsView || daysToVM.showEditEventView || !isSignedIn {
                 Color.clear.background(.ultraThinMaterial)
             }
             
@@ -63,6 +64,10 @@ struct HomeView: View {
                 .offset(y: daysToVM.showAddEventView ? 0 : 1000)
             SettingsView(namespace: namespace)
                 .offset(y: daysToVM.showSettingsView ? 0 : 1000)
+            
+            if !isSignedIn {
+                AuthentificationView()
+            }
             
         }
         .statusBarHidden(daysToVM.showEditEventView)
@@ -147,6 +152,7 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
             .environmentObject(DaysToViewModel())
+            .environmentObject(AuthentificationViewModel())
     }
 }
 
