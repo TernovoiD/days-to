@@ -12,7 +12,7 @@ class NotificationCenter {
     
     static let instance = NotificationCenter()
     
-    func askPermissionToNotifications() {
+    func askPermissionForNotifications() {
         let options: UNAuthorizationOptions = [.alert, .sound, .badge]
         let notificationCenter: UNUserNotificationCenter = UNUserNotificationCenter.current()
         notificationCenter.requestAuthorization(options: options) { success, error in

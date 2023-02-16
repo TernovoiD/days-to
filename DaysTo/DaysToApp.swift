@@ -10,9 +10,7 @@ import Firebase
 
 @main
 struct DaysToApp: App {
-    @StateObject var daysToVM: DaysToViewModel = DaysToViewModel()
-    @StateObject var authentification: AuthentificationViewModel = AuthentificationViewModel()
-    
+    @StateObject var daysToVM = DaysToViewModel()
     init() {
         FirebaseApp.configure()
     }
@@ -21,7 +19,6 @@ struct DaysToApp: App {
         WindowGroup {
             HomeView()
                 .environmentObject(daysToVM)
-                .environmentObject(authentification)
         }
     }
 }

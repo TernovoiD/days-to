@@ -5,128 +5,208 @@
 //  Created by Danylo Ternovoi on 02.02.2023.
 //
 
-import Foundation
-import UserNotifications
+import SwiftUI
+import FirebaseAuth
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 class DaysToViewModel: ObservableObject {
     
+    // MARK: Authentification and User information
+    @AppStorage("isSignedIn") var isSignedIn: Bool = false
+    @AppStorage("userID") var userID: String = ""
+    @Published private(set) var userInfo: UserModel?
     
-    
-    // MARK: Navigation controller
-    
-    @Published var selectedEvent: EventEntity?
-    @Published var eventToEdit: EventEntity?
-    @Published var showEditEventView: Bool = false
+    // MARK: Navigation (transitions)
     @Published var showAddEventView: Bool = false
     @Published var showSettingsView: Bool = false
+    @Published var showEditEventView: Bool = false
+    @Published var showCreateAccountView: Bool = false
+    @Published var selectedEvent: EventModel?
+    @Published var eventToEdit: EventModel?
     
-    
+    // MARK: Alerts
+    @Published var alertMessage: String = ""
+    @Published var alert: Bool = false
     
     // MARK: Data
+    @Published private(set) var events: [EventModel] = []
     
-    @Published var sortedEvents: [EventEntity] = []
-    @Published var thisMonthEvents: [EventEntity] = []
-    @Published var thisYearEvents: [EventEntity] = []
-    @Published var tags: [TagEntity] = []
-    private let dateCalculations = DateCalculationsModel()
-    private let eventsCD = EventsCD()
-    private let tagsCD = TagsCD()
+    let firebaseAuth = Auth.auth()
+    let database = Firestore.firestore()
         
+    
     init() {
-        fetchEvents()
-        fetchTags()
+        getUserInfo()
     }
     
-    func saveData() {
-        eventsCD.save()
-        fetchEvents()
-        fetchTags()
-    }
+    // MARK: Authentification
     
-    
-    
-    // MARK: Events Controller
-    
-    func fetchEvents() {
-        let allEvents = eventsCD.fetch()
-            .filter({ checkRelevance(ofEvent: $0) })
-        sortedEvents = allEvents
-            .sorted(by: { getDaysLeft(toEvent: $0) < getDaysLeft(toEvent: $1) })
-        thisMonthEvents = allEvents
-            .sorted(by: { getDaysLeft(toEvent: $0) < getDaysLeft(toEvent: $1) })
-            .filter({ getDaysLeft(toEvent: $0) <= daysLeftInCurrentMonth() })
-        thisYearEvents = allEvents
-            .filter({ getDaysLeft(toEvent: $0) <= daysLeftInCurrentYear() })
-    }
-    
-    func addEvent(withName name: String, andInfo: String, andDate date: Date, isFavorite: Bool, isRepeated: Bool) {
-        eventsCD.add(name: name, info: andInfo, date: date, isFavorite: isFavorite, isRepeated: isRepeated)
-        saveData()
-    }
-    
-    func editEvent(_ event: EventEntity, newName: String, newDate: Date, isFavorite: Bool, isRepeated: Bool) {
-        eventsCD.edit(event, newName: newName, newDate: newDate, isFavorite: isFavorite, isRepeated: isRepeated)
-        saveData()
-    }
-    
-    func changeEventFavoriteStatus(_ event: EventEntity) {
-        eventsCD.changeFavoriteStatus(event)
-        saveData()
-    }
-    
-    func deleteEvent(_ event: EventEntity) {
-        eventsCD.delete(event)
-        saveData()
-    }
-    
-    private func checkRelevance(ofEvent event: EventEntity) -> Bool {
-        guard let dateOfEvent = event.date else { return false }
-        return dateOfEvent >= Date() || event.isRepeated ? true : false
-    }
-    
-    func getDaysLeft(toEvent event: EventEntity) -> Int {
-        guard let dateOfEvent = event.date else { return 000}
-        
-        if dateOfEvent > Date() {
-            return dateCalculations.calculateDaysLeft(to: dateOfEvent)
-        } else {
-            let anniversary = getAnniveryDate(forEvent: event)
-            return dateCalculations.calculateDaysLeft(to: anniversary)
+    func signUp(userName: String, userEmail: String, userDateOfBirth: Date, userPassword: String) {
+        firebaseAuth.createUser(withEmail: userEmail, password: userPassword) { result, error in
+            if let error = error {
+                print("Error while sign in: \(error.localizedDescription)")
+                self.showAlert(message: error.localizedDescription)
+            } else {
+                self.signIn(userEmail: userEmail, userPassword: userPassword)
+                self.getUserInfo()
+                self.addUser(name: userName, email: userEmail, dateOfBirth: userDateOfBirth)
+            }
         }
     }
     
-    func getAnniveryDate(forEvent event: EventEntity) -> Date {
-        guard let dateOfEvent = event.date else { return Date() }
-        return dateCalculations.calculateAnniversary(for: dateOfEvent)
+    func signIn(userEmail: String, userPassword: String) {
+        firebaseAuth.signIn(withEmail: userEmail, password: userPassword) { result, error in
+            if let error = error {
+                print("Error while sign in: \(error.localizedDescription)")
+                self.showAlert(message: error.localizedDescription)
+                return
+            } else {
+                self.isSignedIn = true
+                self.getUserInfo()
+            }
+        }
     }
     
+    func getUserInfo() {
+        firebaseAuth.addStateDidChangeListener { auth, user in
+            if let user = user {
+                self.userID = user.uid
+                self.fetchUserInfo()
+                self.fetchUserEvents()
+            } else {
+                self.isSignedIn = false
+                self.userID = ""
+            }
+        }
+    }
     
+    func signOut() {
+        do {
+          try firebaseAuth.signOut()
+            isSignedIn = false
+        } catch let error {
+            print("Error signing out: \(error.localizedDescription)")
+        }
+        self.userInfo = nil
+    }
     
-    //MARK: Events filter
+    private func showAlert(message: String) {
+        alertMessage = message
+        alert = true
+    }
+    
+    // MARK: Events filter
     
     @Published var textToSearch: String = ""
     @Published var showFavoriteOnly: Bool = false
     @Published var sevenDays: Bool = false
-    
-    func eventsfilterdBySearch(events: [EventEntity]) -> [EventEntity] {
-        var eventsToFilter: [EventEntity] = events
-        
+
+    func eventsfilterdBySearch() -> [EventModel] {
+        var eventsToFilter = events
+
         if showFavoriteOnly {
             eventsToFilter = eventsToFilter.filter({ $0.isFavorite })
         }
         if sevenDays {
-            eventsToFilter = eventsToFilter.filter({ getDaysLeft(toEvent: $0) <= 7 })
+            eventsToFilter = eventsToFilter.filter({ $0.daysTo <= 7 })
         }
         if !textToSearch.isEmpty {
             let text: String = textToSearch.lowercased()
-            eventsToFilter = eventsToFilter.filter({ $0.name?.lowercased().contains(text) ?? false })
+            eventsToFilter = eventsToFilter.filter({ $0.name.lowercased().contains(text)})
         }
         return eventsToFilter
     }
     
+    func fetchUserInfo() {
+        database.collection("users").document(userID).addSnapshotListener { documentSnapshot, error in
+            guard let document = documentSnapshot else {
+                print("Error while loading user info: \(String(describing: error))")
+                return
+            }
+            do {
+                try self.userInfo = document.data(as: UserModel.self)
+            } catch {
+                print("Error while decoding user info: \(error.localizedDescription)")
+            }
+        }
+    }
     
+    func fetchUserEvents() {
+        database.collection("users").document(userID).collection("events").addSnapshotListener { querySnapshot, error in
+            guard let documents = querySnapshot?.documents else {
+                print("Error while loading Evnts: \(String(describing: error))")
+                return
+            }
+            let allEvents = documents.compactMap { document -> EventModel? in
+                do {
+                    return try document.data(as: EventModel.self)
+                } catch {
+                    print("Error while decoding Event: \(error.localizedDescription)")
+                    return nil
+                }
+            }
+            self.events = allEvents.sorted(by: { $0.daysTo < $1.daysTo })
+        }
+    }
+    
+    func addEvent(name: String, description: String, date: Date, isFavorite: Bool, isRepeated: Bool) {
+        let newEvent = EventModel(date: date, name: name, isRepeated: isRepeated, isFavorite: isFavorite, description: description)
+        do {
+            try database.collection("users").document(userID).collection("events").document(newEvent.id).setData(from: newEvent)
+        } catch {
+            print("Error while add new Event:\(error.localizedDescription)")
+        }
+    }
+    
+    func toggleEventFavoriteStatus(event: EventModel) {
+        let eventRef = database.collection("users").document(userID).collection("events").document(event.id)
+        let newStatus = !event.isFavorite
+        
+        eventRef.updateData([
+            "isFavorite" : newStatus
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+    }
+    
+    func editEvent(eventID: String, eventName: String, eventDescription: String, eventDate: Date, isFavorite: Bool, isRepeated: Bool) {
+        let eventRef = database.collection("users").document(userID).collection("events").document(eventID)
+        
+        eventRef.updateData([
+            "name" : eventName,
+            "description" : eventDescription,
+            "date" : eventDate,
+            "isRepeated" : isRepeated,
+            "isFavorite" : isFavorite
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+    }
+    
+    func deleteEvent(event: EventModel) {
+        database.collection("users").document(userID).collection("events").document(event.id).delete()
+    }
+    
+    func addUser(name: String, email: String, dateOfBirth: Date) {
+        let user = UserModel(id: userID, name: name, email: email, dateOfBirth: dateOfBirth)
+        do {
+            try database.collection("users").document(userID).setData(from: user)
+        } catch {
+            print("Error while add new Event:\(error.localizedDescription)")
+        }
+    }
     
     // MARK: DateCalculations Controller
+    private let dateCalculations = DateCalculationsModel()
     
     func daysInCurrentMonth() -> Int {
         return dateCalculations.getDaysInCurrentMonth()
@@ -148,23 +228,5 @@ class DaysToViewModel: ObservableObject {
     func startOfNextYearDate() -> Date {
         return dateCalculations.getStartOnNextYearDate()
     }
-    
-    
-    
-    // MARK: Tags Controller
-    
-    func fetchTags() {
-        let allTags = tagsCD.fetch()
-        tags = allTags
-    }
-    
-    func addTag(withName name: String, andColor color: String) {
-        tagsCD.add(name: name, color: color)
-        saveData()
-    }
-    
-    func deleteTag(_ tag: TagEntity) {
-        tagsCD.delete(tag)
-        saveData()
-    }
+
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SearchPlateView: View {
     @EnvironmentObject var daysToVM: DaysToViewModel
-    
+
     var body: some View {
         GeometryReader { proxy in
             plate
@@ -29,7 +29,7 @@ struct SearchPlateView: View {
                 .padding()
         }
     }
-    
+
     var plate: some View {
         VStack(alignment: .leading, spacing: 8) {
             Spacer()
