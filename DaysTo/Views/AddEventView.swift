@@ -108,7 +108,7 @@ struct AddEventView: View {
                 valid = false
             } else {
                 valid = true
-                daysToVM.addEvent(withName: eventName, andInfo: eventDescription, andDate: eventDate, isFavorite: isFavorite, isRepeated: isRepeated)
+                daysToVM.addEvent(name: eventName, description: eventDescription, date: eventDate, isFavorite: isFavorite, isRepeated: isRepeated)
                 daysToVM.showAddEventView = false
                 clearFields()
             }
@@ -130,6 +130,7 @@ struct AddEventView_Previews: PreviewProvider {
             LinearGradient(colors: [.purple, .white], startPoint: .top, endPoint: .bottom)
                 .ignoresSafeArea()
             AddEventView()
+                .environmentObject(DaysToViewModel())
         }
     }
 }

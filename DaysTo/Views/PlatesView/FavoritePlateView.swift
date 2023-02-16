@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct FavoritePlateView: View {
-    
     @EnvironmentObject var daysToVM: DaysToViewModel
-    
+
     var body: some View {
         GeometryReader { proxy in
             plate
@@ -19,7 +18,7 @@ struct FavoritePlateView: View {
                 .shadow(color: Color.black.opacity(0.6), radius: 5, x: 0, y: 5)
                 .blur(radius: abs(proxy.frame(in: .global).minX) / 50)
                 .overlay(
-                    
+
                     VStack {
                         let scroll = proxy.frame(in: .global).minX
                                 Text("Favorites")
@@ -29,10 +28,10 @@ struct FavoritePlateView: View {
                                 .offset(x: 20, y: -20)
                                 .offset(x: scroll * 1.5)
                         VStack(alignment: .leading, spacing: 10) {
-                            ForEach(daysToVM.sortedEvents.filter({ $0.isFavorite}).indices, id: \.self) { index in
+                            ForEach(daysToVM.events.filter({ $0.isFavorite}).indices, id: \.self) { index in
                                     if index < 3 {
                                         let indexName = "\(index + 1).square"
-                                        let eventName = daysToVM.sortedEvents.filter({ $0.isFavorite})[index].name ?? "No name"
+                                        let eventName = daysToVM.events.filter({ $0.isFavorite})[index].name 
                                         HStack {
                                             Image(systemName: indexName)
                                             Text(eventName)
@@ -51,7 +50,7 @@ struct FavoritePlateView: View {
                 .padding()
         }
     }
-    
+
     var plate: some View {
         VStack(alignment: .leading, spacing: 8) {
             Spacer()
