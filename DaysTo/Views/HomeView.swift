@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @AppStorage("isSignedIn") var isSignedIn: Bool = false
     @AppStorage("backgroundScheme") var backgroundScheme: String = "Background Purple Waves"
+    @AppStorage("appColorScheme") var appColorScheme: String = "Indigo"
     @EnvironmentObject var daysToVM: DaysToViewModel
     @Namespace var namespace
     @State var hasScrolled: Bool = false
@@ -21,8 +22,7 @@ struct HomeView: View {
         ZStack {
             Image(backgroundScheme)
                 .resizable()
-                .aspectRatio(contentMode: .fit)
-                .scaleEffect(1.8)
+                .scaleEffect(1.5)
                 .rotationEffect(.degrees(180))
                 .offset(y: backgroundScroll)
                 .zIndex(-1)
@@ -42,8 +42,7 @@ struct HomeView: View {
             .coordinateSpace(name: "scroll")
             .safeAreaInset(edge: .top, content: { Color.clear.frame(height: 70) })
             .overlay(NavBarView(hasScrolled: $hasScrolled, namespace: namespace, title: "DaysTo"))
-            .scaleEffect(daysToVM.showAddEventView || daysToVM.showSettingsView || daysToVM.showEditEventView || !isSignedIn ? 0.8 : 1)
-            
+            .scaleEffect(daysToVM.showAddEventView || daysToVM.showSettingsView || daysToVM.showEditEventView || !isSignedIn || daysToVM.showMyAccount || daysToVM.showCreditsView ? 0.9 : 1)
             if daysToVM.showAddEventView || daysToVM.showSettingsView || daysToVM.showEditEventView || !isSignedIn {
                 Color.clear.background(.ultraThinMaterial)
             }
@@ -62,20 +61,17 @@ struct HomeView: View {
             
             AddEventView()
                 .offset(y: daysToVM.showAddEventView ? 0 : 1000)
+            AccountView()
+                .offset(y: daysToVM.showMyAccount ? 0 : 1000)
             SettingsView(namespace: namespace)
                 .offset(y: daysToVM.showSettingsView ? 0 : 1000)
+            CreditsView()
+                .offset(y: daysToVM.showCreditsView ? 0 : 1000)
             
             if !isSignedIn {
-                    RegistrationView()
-                    .offset(y: daysToVM.showCreateAccountView ? 0 : 1000)
-                    LoginView()
-                    .offset(y: daysToVM.showCreateAccountView ? 1000 : 0)
+                AuthentificationView()
             }
-            
         }
-        .statusBarHidden(daysToVM.showEditEventView)
-        .toolbarColorScheme(.light, for: .navigationBar)
-        .background(.ultraThinMaterial)
     }
     
     var scrollDetector: some View {

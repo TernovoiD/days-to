@@ -21,7 +21,8 @@ class DaysToViewModel: ObservableObject {
     @Published var showAddEventView: Bool = false
     @Published var showSettingsView: Bool = false
     @Published var showEditEventView: Bool = false
-    @Published var showCreateAccountView: Bool = false
+    @Published var showMyAccount: Bool = false
+    @Published var showCreditsView: Bool = false
     @Published var selectedEvent: EventModel?
     @Published var eventToEdit: EventModel?
     
@@ -68,6 +69,44 @@ class DaysToViewModel: ObservableObject {
         }
     }
     
+    func signOut() {
+        do {
+          try firebaseAuth.signOut()
+            isSignedIn = false
+        } catch let error {
+            print("Error signing out: \(error.localizedDescription)")
+            self.showAlert(message: error.localizedDescription)
+        }
+        self.userInfo = nil
+    }
+    
+    func sendEmailVerification() {
+        firebaseAuth.currentUser?.sendEmailVerification { error in
+            if let error = error {
+                print("Error while sending email verification: \(error.localizedDescription)")
+                self.showAlert(message: error.localizedDescription)
+            }
+        }
+    }
+    
+    func updatePassword(password: String) {
+        firebaseAuth.currentUser?.updatePassword(to: password) { error in
+            if let error = error {
+                print("Error while updating password: \(error.localizedDescription)")
+                self.showAlert(message: error.localizedDescription)
+            }
+        }
+    }
+    
+    func resetPassword(email: String) {
+        firebaseAuth.sendPasswordReset(withEmail: email) { error in
+            if let error = error {
+                print("Error while sending email reset: \(error.localizedDescription)")
+                self.showAlert(message: error.localizedDescription)
+            }
+        }
+    }
+    
     func getUserInfo() {
         firebaseAuth.addStateDidChangeListener { auth, user in
             if let user = user {
@@ -81,14 +120,30 @@ class DaysToViewModel: ObservableObject {
         }
     }
     
-    func signOut() {
-        do {
-          try firebaseAuth.signOut()
-            isSignedIn = false
-        } catch let error {
-            print("Error signing out: \(error.localizedDescription)")
+//    func reauthentificateUser() {
+//        let user = firebaseAuth.currentUser
+//        var credential = firebaseAuth.emai
+//
+//        // Prompt the user to re-provide their sign-in credentials
+//
+//        user?.reauthenticate(with: credential) { error in
+//          if let error = error {
+//            // An error happened.
+//          } else {
+//            // User re-authenticated.
+//          }
+//        }
+//    }
+    
+    func deleteUser() {
+        let user = firebaseAuth.currentUser
+
+        user?.delete { error in
+          if let error = error {
+              print("Error while deleting user account: \(error.localizedDescription)")
+              self.showAlert(message: error.localizedDescription)
+          }
         }
-        self.userInfo = nil
     }
     
     private func showAlert(message: String) {

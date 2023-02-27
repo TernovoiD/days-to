@@ -15,6 +15,11 @@ struct AddEventView: View {
     @State var isFavorite: Bool = false
     @State var isRepeated: Bool = false
     @State var valid: Bool = true
+    @FocusState var selectedField: FocusText?
+    
+    enum FocusText {
+        case name
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
@@ -33,10 +38,13 @@ struct AddEventView: View {
             saveButton
         }
         .padding()
-        .background(.ultraThickMaterial)
+        .background()
         .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
         .shadow(radius: 5, y: 5)
         .padding()
+        .onTapGesture {
+            selectedField = .none
+        }
     }
     
     var topPanel: some View {
@@ -47,6 +55,7 @@ struct AddEventView: View {
             Spacer()
             Button {
                 withAnimation(.easeInOut) {
+                    selectedField = .none
                     daysToVM.showAddEventView = false
                     clearFields()
                     valid = true
@@ -66,10 +75,14 @@ struct AddEventView: View {
         TextField("Name...", text: $eventName)
             .font(.callout.weight(.black))
             .padding()
-//            .foregroundColor(.indigo)
-            .background(.thinMaterial)
+            .background(.ultraThinMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
             .autocorrectionDisabled(true)
+            .focused($selectedField, equals: .name)
+            .submitLabel(.next)
+            .onSubmit {
+                selectedField = .none
+            }
     }
     
     var calendar: some View {

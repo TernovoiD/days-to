@@ -50,7 +50,7 @@ struct StartPlateView: View {
         }
         .font(.footnote.weight(.medium))
         .padding(.horizontal)
-        .padding(.vertical, 40)
+        .padding(.vertical, 20)
         .frame(maxWidth: .infinity, alignment: .leading)
         .frame(height: 250)
         .foregroundStyle(

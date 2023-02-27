@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct PlatesView: View {
+    @AppStorage("selectedTabIndex") var selectedTabIndex: Int = 0
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTabIndex) {
             StartPlateView()
+                .tag(0)
             SearchPlateView()
+                .tag(1)
             FavoritePlateView()
-            //            if daysToVM.sortedEvents.count > 1 {
-            //                UpcomingPlateView()
-            //            }
+                .tag(2)
             ProgressionPlateView()
+                .tag(3)
         }
         .tabViewStyle(.page(indexDisplayMode: .always))
         .frame(height: 315)

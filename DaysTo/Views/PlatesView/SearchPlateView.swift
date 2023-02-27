@@ -9,6 +9,11 @@ import SwiftUI
 
 struct SearchPlateView: View {
     @EnvironmentObject var daysToVM: DaysToViewModel
+    @FocusState var selectedField: FocusText?
+    
+    enum FocusText {
+        case searchField
+    }
 
     var body: some View {
         GeometryReader { proxy in
@@ -79,7 +84,12 @@ struct SearchPlateView: View {
                     .foregroundColor(.white)
                     .background(.ultraThinMaterial)
                     .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
-                .autocorrectionDisabled(true)
+                    .autocorrectionDisabled(true)
+                    .focused($selectedField, equals: .searchField)
+                    .submitLabel(.search)
+                    .onSubmit {
+                        selectedField = .none
+                    }
                 Button {
                     withAnimation(.easeInOut) {
                         daysToVM.textToSearch = ""
@@ -102,6 +112,9 @@ struct SearchPlateView: View {
         .background(
             .ultraThinMaterial
         )
+        .onTapGesture {
+            selectedField = .none
+        }
     }
 
 }

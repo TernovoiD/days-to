@@ -11,23 +11,54 @@ struct LoginView: View {
     @EnvironmentObject var daysToVM: DaysToViewModel
     @State var email: String = ""
     @State var password: String = ""
+    @State var error: String = ""
+    @State var showResetPasswordView: Bool = false
+    @FocusState var selectedField: FocusText?
+    
+    enum FocusText {
+        case email
+        case password
+    }
+    
+    var isFormValid: Bool {
+        if email.isEmpty || password.isEmpty {
+            error = "Fields cannot be empty."
+            return false
+        } else if !email.isValidEmail {
+            error = "Email is not valid."
+            return false
+        } else if !password.isValidPassword {
+            error = "Password must contain at least 6 characters."
+            return false
+        } else {
+            return true
+        }
+    }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 15) {
+        VStack {
+            Spacer()
             Text("Login")
                 .padding(10)
                 .font(.title.weight(.black))
-                .frame(maxWidth: .infinity)
-            TextField("Email", text: $email)
-                .padding()
-                .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
-            Divider()
-            TextField("Password", text: $password)
-                .padding()
-                .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
-            
+                .glassyFont(textColor: .primary)
+            fields
             Button {
-                daysToVM.signIn(userEmail: email, userPassword: password)
+                showResetPasswordView = true
+            } label: {
+                Text("Forgot password?")
+                    .glassyFont(textColor: Color.blue)
+                    .font(.callout)
+                    .padding(.horizontal)
+                    .padding(.top)
+            }
+            Spacer()
+            Text(error)
+                .glassyFont(textColor: .red)
+                .fontWeight(.bold)
+                .padding(.horizontal)
+            Button {
+                signIN()
             } label: {
                 Text("Sign In")
                     .frame(maxWidth: .infinity)
@@ -37,26 +68,65 @@ struct LoginView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
             }
             .padding(.top, 20)
-            
-            HStack {
-                Text("Don't have an account?")
-                Button {
-                    withAnimation(.easeInOut) {
-                        daysToVM.showCreateAccountView = true
-                    }
-                } label: {
-                    Text("Sign up".uppercased())
-                        .bold()
-                }
-            }
-            .frame(maxWidth: .infinity)
-            
         }
         .padding()
+        .ignoresSafeArea(.keyboard)
         .background()
-        .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
-        .shadow(radius: 5, y: 5)
-        .padding()
+        .onTapGesture {
+            selectedField = .none
+        }
+        .sheet(isPresented: $showResetPasswordView) {
+            ResetPasswordView(showResetPasswordView: $showResetPasswordView)
+        }
+        .alert(daysToVM.alertMessage, isPresented: $daysToVM.alert) {
+            Button("OK", role: .cancel) { daysToVM.alert = false }
+        }
+        .onDisappear {
+            clearForm()
+        }
+    }
+    
+    var fields: some View {
+        VStack(alignment: .leading, spacing: 15) {
+            TextField("Email", text: $email)
+                .padding()
+                .selectedField(colors: selectedField == .email ? [.indigo, .blue] : [.clear, .clear])
+                .focused($selectedField, equals: .email)
+                .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                .keyboardType(.emailAddress)
+                .submitLabel(.next)
+                .autocorrectionDisabled(true)
+                .textInputAutocapitalization(.never)
+                .onSubmit {
+                    selectedField = .password
+                }
+            Divider()
+            SecureField("Password", text: $password)
+                .padding()
+                .selectedField(colors: selectedField == .password ? [.indigo, .blue] : [.clear, .clear])
+                .focused($selectedField, equals: .password)
+                .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                .keyboardType(.default)
+                .submitLabel(.done)
+                .autocorrectionDisabled(true)
+                .textInputAutocapitalization(.never)
+                .onSubmit {
+                    selectedField = .none
+                }
+        }
+    }
+    
+    func signIN() {
+        error = ""
+        if isFormValid {
+            daysToVM.signIn(userEmail: email, userPassword: password)
+        }
+    }
+    
+    func clearForm() {
+        email = ""
+        password = ""
+        error = ""
     }
 }
 

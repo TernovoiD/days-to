@@ -13,30 +13,91 @@ struct RegistrationView: View {
     @State var dateOfBirth: Date = Date()
     @State var email: String = ""
     @State var password: String = ""
+    @State var error: String = ""
+    @FocusState var selectedField: FocusText?
+    
+    enum FocusText {
+        case name
+        case email
+        case password
+    }
+    
+    var isFormValid: Bool {
+        if email.isEmpty || password.isEmpty || name.isEmpty {
+            error = "Fields cannot be empty."
+            return false
+        } else if !name.isValidName {
+            error = "Name must contain at least 3 characters."
+            return false
+        } else if !email.isValidEmail {
+            error = "Email is not valid."
+            return false
+        } else if !password.isValidPassword {
+            error = "Password must contain at least 6 characters."
+            return false
+        } else {
+            return true
+        }
+    }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 15) {
+        VStack {
+            Spacer()
             Text("Create an account")
                 .padding(10)
                 .font(.title.weight(.black))
+                .glassyFont(textColor: .primary)
                 .frame(maxWidth: .infinity)
-            TextField("Name", text: $name)
-                .padding()
-                .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
-            Divider()
-            TextField("Email", text: $email)
-                .padding()
-                .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
-            Divider()
-            TextField("Password", text: $password)
-                .padding()
-                .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
-            Divider()
+            VStack(alignment: .leading, spacing: 10) {
+                TextField("Name", text: $name)
+                    .padding()
+                    .selectedField(colors: selectedField == .name ? [.indigo, .blue] : [.clear, .clear])
+                    .focused($selectedField, equals: .name)
+                    .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                    .keyboardType(.default)
+                    .autocorrectionDisabled(true)
+                    .submitLabel(.next)
+                    .onSubmit {
+                        selectedField = .email
+                    }
+                Divider()
+                TextField("Email", text: $email)
+                    .padding()
+                    .selectedField(colors: selectedField == .email ? [.indigo, .blue] : [.clear, .clear])
+                    .focused($selectedField, equals: .email)
+                    .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                    .keyboardType(.emailAddress)
+                    .autocorrectionDisabled(true)
+                    .textInputAutocapitalization(.never)
+                    .submitLabel(.next)
+                    .onSubmit {
+                        selectedField = .password
+                    }
+                Divider()
+                TextField("Password", text: $password)
+                    .padding()
+                    .selectedField(colors: selectedField == .password ? [.indigo, .blue] : [.clear, .clear])
+                    .focused($selectedField, equals: .password)
+                    .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                    .keyboardType(.emailAddress)
+                    .autocorrectionDisabled(true)
+                    .textInputAutocapitalization(.never)
+                    .submitLabel(.done)
+                    .onSubmit {
+                        selectedField = .none
+                    }
+            }
             DatePicker("Date of birth", selection: $dateOfBirth, displayedComponents: .date)
                 .datePickerStyle(.compact)
                 .padding()
+                .background()
+            Spacer()
+            Text(error)
+                .glassyFont(textColor: .red)
+                .fontWeight(.bold)
+                .padding(.horizontal)
             Button {
-                daysToVM.signUp(userName: name, userEmail: email, userDateOfBirth: dateOfBirth, userPassword: password)
+                signUP()
             } label: {
                 Text("Sign Up")
                     .frame(maxWidth: .infinity)
@@ -46,26 +107,32 @@ struct RegistrationView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
             }
             .padding(.top, 20)
-            
-            HStack {
-                Text("Already have an account?")
-                Button {
-                    withAnimation(.easeInOut) {
-                        daysToVM.showCreateAccountView = false
-                    }
-                } label: {
-                    Text("Sign In".uppercased())
-                        .bold()
-                }
-            }
-            .frame(maxWidth: .infinity)
-            
         }
         .padding()
         .background()
-        .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
-        .shadow(radius: 5, y: 5)
-        .padding()
+        .onTapGesture {
+            selectedField = .none
+        }
+        .ignoresSafeArea(.keyboard)
+        .alert(daysToVM.alertMessage, isPresented: $daysToVM.alert) {
+            Button("OK", role: .cancel) { daysToVM.alert = false }
+        }
+        .onDisappear {
+            clearForm()
+        }
+    }
+    
+    func signUP() {
+        if isFormValid {
+            daysToVM.signUp(userName: name, userEmail: email, userDateOfBirth: dateOfBirth, userPassword: password)
+        }
+    }
+    
+    func clearForm() {
+        name = ""
+        email = ""
+        password = ""
+        error = ""
     }
 }
 
