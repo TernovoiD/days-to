@@ -12,7 +12,7 @@ struct NavBarView: View {
     @Binding var hasScrolled: Bool
     @State var openMenu: Bool = false
     var namespace: Namespace.ID
-    var title: String = "Navigation Bar"
+    var title: String = "Navigation"
     
     var body: some View {
         HStack(alignment: .top) {
@@ -55,7 +55,23 @@ struct NavBarView: View {
                             daysToVM.showAddEventView = true
                         }
                     } label: {
-                        Label("Add Event", systemImage: "plus")
+                        HStack {
+                            Image(systemName: "plus")
+                                .frame(maxWidth: 20)
+                            Text("Add Event")
+                        }
+                    }
+                    Button {
+                        withAnimation(.easeInOut) {
+                            openMenu = false
+                            daysToVM.showMyAccount = true
+                        }
+                    } label: {
+                        HStack {
+                            Image(systemName: "person")
+                                .frame(maxWidth: 20)
+                            Text("My account")
+                        }
                     }
                     Button {
                         withAnimation(.easeInOut) {
@@ -63,7 +79,23 @@ struct NavBarView: View {
                             daysToVM.showSettingsView = true
                         }
                     } label: {
-                        Label("Settings", systemImage: "gear")
+                        HStack {
+                            Image(systemName: "gear")
+                                .frame(maxWidth: 20)
+                            Text("Settings")
+                        }
+                    }
+                    Button {
+                        withAnimation(.easeInOut) {
+                            openMenu = false
+                            daysToVM.showCreditsView = true
+                        }
+                    } label: {
+                        HStack {
+                            Image(systemName: "c.circle")
+                                .frame(maxWidth: 20)
+                            Text("Credits")
+                        }
                     }
                     Divider()
                         .frame(maxWidth: 100)
@@ -73,7 +105,11 @@ struct NavBarView: View {
                             daysToVM.signOut()
                         }
                     } label: {
-                        Label("Sign Out", systemImage: "person")
+                        HStack {
+                            Image(systemName: "person.fill.xmark")
+                                .frame(maxWidth: 20)
+                            Text("Sign Out")
+                        }
                     }
                 }
             }

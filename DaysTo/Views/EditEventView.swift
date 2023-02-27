@@ -19,19 +19,23 @@ struct EditEventView: View {
     @State var isFavorite: Bool = false
     @State var isRepeated: Bool = false
     @State var valid: Bool = true
+    @FocusState var selectedField: FocusText?
+    
+    enum FocusText {
+        case name
+    }
 
     var body: some View {
         VStack {
-            VStack {
-                Spacer()
-                Image(systemName: "rectangle.and.pencil.and.ellipsis")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .foregroundColor(.white)
+            VStack(spacing: 10) {
                 topPanel
+                VStack {
+                    name
+                    dateAndToggles
+                }
             }
             .padding()
-            .frame(maxWidth: .infinity, maxHeight: 300, alignment: .leading)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .background(
                 Color(appColorScheme)
                     .matchedGeometryEffect(id: "background\(eventID)", in: namespace)
@@ -40,17 +44,13 @@ struct EditEventView: View {
                 RoundedRectangle(cornerRadius: 15, style: .continuous)
                     .matchedGeometryEffect(id: "mask\(eventID)", in: namespace)
             )
-            .shadow(color: .black, radius: 5)
-            VStack(spacing: 20) {
-                name
-                dateAndToggles
-                description
-                saveButton
-                Spacer()
-            }
-            .padding()
+            .padding(.horizontal)
+            saveButton
+                .padding(.horizontal)
         }
-        .ignoresSafeArea()
+        .onTapGesture {
+            selectedField = .none
+        }
     }
 
     var topPanel: some View {
@@ -61,6 +61,7 @@ struct EditEventView: View {
                 Spacer()
                 Button {
                     withAnimation(.easeInOut) {
+                        selectedField = .none
                         daysToVM.showEditEventView = false
                         daysToVM.eventToEdit = nil
                     }
@@ -80,6 +81,12 @@ struct EditEventView: View {
             .padding()
             .background()
             .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+            .autocorrectionDisabled(true)
+            .focused($selectedField, equals: .name)
+            .submitLabel(.next)
+            .onSubmit {
+                selectedField = .none
+            }
     }
     
     var dateAndToggles: some View {

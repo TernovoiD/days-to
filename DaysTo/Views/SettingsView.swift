@@ -15,18 +15,21 @@ struct SettingsView: View {
     @AppStorage("appColorScheme") var appColorScheme: String = "Indigo"
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 15) {
-            topPanel
-                .padding(.bottom)
-            toggles
-            Divider()
-            colors
+        VStack {
+            Spacer()
+            VStack(alignment: .leading, spacing: 15) {
+                topPanel
+                    .padding(.bottom)
+                toggles
+                Divider()
+                colors
+            }
+            .padding()
+            .background()
+            .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
+            .shadow(radius: 5, y: 5)
+        .padding()
         }
-        .padding()
-        .background(.ultraThickMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
-        .shadow(radius: 5, y: 5)
-        .padding()
     }
     
     var topPanel: some View {
