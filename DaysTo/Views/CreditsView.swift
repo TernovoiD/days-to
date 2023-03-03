@@ -13,23 +13,26 @@ struct CreditsView: View {
         VStack {
             topPanel
                 .padding(.horizontal)
-            Image("logo")
+            Image("daysTo.logo")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
             VStack(alignment: .leading, spacing: 10) {
-                Text("DaysTo is a free non-commercial program built as a training project to make our everyday life easier. The application was created using Swift programing language on MVVM architectural pattern with frameworks:")
-                    .font(.headline)
+                Text("**DaysTo** is a non-commercial program built as a training project to make our everyday life easier. The application was created using Swift programing language on MVVM architectural pattern with frameworks:")
                     .glassyFont(textColor: .primary)
                 Text("- SwiftUI by Apple")
+                    .font(.headline)
                 Text("- WidgetKIT by Apple")
+                    .font(.headline)
                 Text("- Firebase Auth by Google")
+                    .font(.headline)
                 Text("- Firestore by Google")
+                    .font(.headline)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal)
             
             Spacer()
-            VStack(spacing: 1) {
+            VStack(spacing: 2) {
                 Text("DaysTo")
                 Text("Version 0.1.1")
                 Text("Created by Danylo Ternovoi")

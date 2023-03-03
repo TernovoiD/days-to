@@ -90,6 +90,8 @@ struct AccountView: View {
                     Button("DELETE", role: .destructive) {
                         withAnimation(.easeInOut) {
                             daysToVM.deleteUser()
+                            daysToVM.reloadWidget()
+                            daysToVM.showMyAccount = false
                         }
                     }
                 }

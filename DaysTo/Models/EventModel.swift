@@ -8,7 +8,7 @@
 import Foundation
 
 struct EventModel: Identifiable, Codable, Equatable {
-    let id: String
+    var id: String
     var date: Date
     var name: String
     var isRepeated: Bool
@@ -49,7 +49,28 @@ struct EventModel: Identifiable, Codable, Equatable {
             let today = calendar.startOfDay(for: Date())
             let dateOfEvent = calendar.startOfDay(for: anniversaryDate)
             guard let daysTo = calendar.dateComponents([.day], from: today, to: dateOfEvent).day else { return 999 }
+        if daysTo == 366 {
+            return 0
+        } else {
             return daysTo
+        }
+    }
+    
+    var daysToDescription: String {
+        switch daysTo {
+        case 1:
+            return "day"
+        default:
+            return "days"
+        }
+    }
+    
+    var age: Int {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let dateOfEvent = calendar.startOfDay(for: date)
+        guard let age = calendar.dateComponents([.year], from: today, to: dateOfEvent).year else { return 999 }
+        return abs(age)
     }
     
     
@@ -61,11 +82,9 @@ extension EventModel {
         return lhs.id == rhs.id
     }
     
-    
     static let testEvents: [EventModel] = [
-        EventModel(date: Date(), name: "First Event", isRepeated: true, isFavorite: false, description: "Additional Info"),
-        EventModel(date: Date(), name: "Second Event", isRepeated: true, isFavorite: false, description: "Additional Info"),
-        EventModel(date: Date(), name: "Third Event", isRepeated: true, isFavorite: false, description: "Additional Info"),
-        EventModel(date: Date(), name: "Fourth Event", isRepeated: true, isFavorite: false, description: "Additional Info")
+        EventModel(date: Date(timeIntervalSince1970: 3600 * 24 * 365 * 29 + 3600 * 24 * 200), name: "Mike's birthday", isRepeated: true, isFavorite: true, description: "Additional Info"),
+        EventModel(date: Date(timeIntervalSince1970: 3600 * 24 * 365 * 49 + 3600 * 24 * 50), name: "The day I've met my wife", isRepeated: true, isFavorite: true, description: "Additional Info"),
+        EventModel(date: Date(timeIntervalSince1970: 3600 * 24 * 365 * 71 - 3600 * 24 * 13), name: "Cars will be flying", isRepeated: true, isFavorite: false, description: "Additional Info")
     ]
 }

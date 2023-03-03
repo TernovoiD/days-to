@@ -13,7 +13,7 @@ struct InstrucrtionsView: View {
             VStack {
                 Spacer()
                 RoundedRectangle(cornerRadius: 15, style: .continuous)
-                    .background(.ultraThinMaterial)
+                    .foregroundColor(.black.opacity(0.4))
                     .frame(width: 60, height: 15)
                     .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
             }
@@ -34,10 +34,11 @@ struct InstrucrtionsView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .foregroundStyle(.linearGradient(colors: [.indigo, .purple], startPoint: .topLeading, endPoint: .bottomTrailing))
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .frame(height: 150)
             Text("Create Event")
                 .font(.headline.weight(.heavy))
-            Text("Birthday, wedding, the day you found your love or will become graduated. Any future or past event can be added!")
+            Text("Birthday, wedding, the day you met your love or will become graduated. Any future or past event can be added!")
                 .font(.subheadline)
                 .glassyFont(textColor: .primary)
         }

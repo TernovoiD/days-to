@@ -16,46 +16,51 @@ struct HomeView: View {
     @State var hasScrolled: Bool = false
     @State var showStatusBar: Bool = true
     @State var backgroundScroll: CGFloat = 0
-    var columns = [GridItem(.adaptive(minimum: 300), spacing: 20)]
     
     var body: some View {
         ZStack {
             Image(backgroundScheme)
                 .resizable()
-                .scaleEffect(1.5)
-                .rotationEffect(.degrees(180))
+                .scaleEffect(1.2)
+                .background()
                 .offset(y: backgroundScroll)
                 .zIndex(-1)
-            
-            ScrollView {
-                
-                scrollDetector
-                
-                PlatesView()
-                
-                ForEach(daysToVM.eventsfilterdBySearch()) { event in
-                    EventRowView(namespace: namespace, event: event)
+                .onTapGesture {
+                    withAnimation(.easeInOut) {
+                        daysToVM.openMenu = false
+                        daysToVM.selectedEvent = nil
+                    }
                 }
-                
-            }
-            .scrollIndicators(.hidden)
-            .coordinateSpace(name: "scroll")
-            .safeAreaInset(edge: .top, content: { Color.clear.frame(height: 70) })
-            .overlay(NavBarView(hasScrolled: $hasScrolled, namespace: namespace, title: "DaysTo"))
-            .scaleEffect(daysToVM.showAddEventView || daysToVM.showSettingsView || daysToVM.showEditEventView || !isSignedIn || daysToVM.showMyAccount || daysToVM.showCreditsView ? 0.9 : 1)
-            if daysToVM.showAddEventView || daysToVM.showSettingsView || daysToVM.showEditEventView || !isSignedIn {
-                Color.clear.background(.ultraThinMaterial)
+            
+            if #available(iOS 16.0, *) {
+                scrollableContent
+                    .scrollIndicators(.hidden)
+                    .scrollDismissesKeyboard(.immediately)
+            } else {
+                scrollableContent
             }
             
-            ForEach(daysToVM.eventsfilterdBySearch()) { event in
+            
+            if daysToVM.showSettingsView {
+                Color.clear.background(.ultraThinMaterial)
+                    .onTapGesture {
+                        withAnimation(.easeInOut) {
+                            daysToVM.showAddEventView = false
+                            daysToVM.showSettingsView = false
+                            daysToVM.showEditEventView = false
+                            daysToVM.eventToEdit = nil
+                        }
+                    }
+            }
+            
+            ForEach(daysToVM.events) { event in
                 if event == daysToVM.eventToEdit {
-                    EditEventView(namespace: namespace,
-                                  eventID: event.id,
-                                  eventName: event.name,
-                                  eventDescription: event.description,
-                                  eventDate: event.date,
-                                  isFavorite: event.isFavorite,
-                                  isRepeated: event.isRepeated)
+                        EditEventView(eventID: event.id,
+                                      eventName: event.name,
+                                      eventDate: event.date,
+                                      eventDescription: "",
+                                      isFavorite: event.isFavorite,
+                                      isRepeated: event.isRepeated)
                 }
             }
             
@@ -67,11 +72,36 @@ struct HomeView: View {
                 .offset(y: daysToVM.showSettingsView ? 0 : 1000)
             CreditsView()
                 .offset(y: daysToVM.showCreditsView ? 0 : 1000)
-            
-            if !isSignedIn {
-                AuthentificationView()
-            }
+            AuthentificationView()
+                .offset(y: !isSignedIn ? 0 : 1000)
         }
+        .ignoresSafeArea(.keyboard)
+        .onDisappear {
+            daysToVM.reloadWidget()
+        }
+    }
+    
+    var scrollableContent: some View {
+        ScrollView {
+            
+            scrollDetector
+
+            PlatesView()
+            
+            clearFiltersButton
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.horizontal)
+                .offset(x: daysToVM.showFavoriteOnly || daysToVM.sevenDays ? 0 : 1000)
+
+            ForEach(daysToVM.eventsfilterdBySearch()) { event in
+                EventRowView(namespace: namespace, event: event)
+            }
+            
+        }
+        .coordinateSpace(name: "scroll")
+        .safeAreaInset(edge: .top, content: { Color.clear.frame(height: 70) })
+        .overlay(NavBarView(hasScrolled: $hasScrolled, namespace: namespace, title: "DaysTo"))
+        .scaleEffect(daysToVM.showAddEventView || daysToVM.showSettingsView || daysToVM.showEditEventView || !isSignedIn || daysToVM.showMyAccount || daysToVM.showCreditsView ? 0.8 : 1)
     }
     
     var scrollDetector: some View {
@@ -86,11 +116,32 @@ struct HomeView: View {
         })
     }
     
+    var clearFiltersButton: some View {
+        Button {
+            withAnimation(.easeInOut) {
+                daysToVM.showFavoriteOnly = false
+                daysToVM.sevenDays = false
+            }
+        } label: {
+            HStack {
+                Text("Clear all filters")
+                Image(systemName: "xmark")
+            }
+            .padding(5)
+            .padding(.horizontal, 10)
+            .font(.headline)
+            .glassyFont(textColor: .white)
+            .background(Color(appColorScheme))
+            .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+        }
+        
+    }
+    
     func calculateBackgroundScroll(_ proxy: CGFloat) -> CGFloat {
         if proxy >= 0 {
             return 0
-        } else if proxy < -300 {
-            return -300 * 1.3
+        } else if proxy < -200 {
+            return -200 * 1.3
         } else {
             return proxy * 1.3
         }

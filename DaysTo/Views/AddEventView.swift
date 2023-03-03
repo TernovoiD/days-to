@@ -14,34 +14,47 @@ struct AddEventView: View {
     @State var eventDate: Date = Date()
     @State var isFavorite: Bool = false
     @State var isRepeated: Bool = false
-    @State var valid: Bool = true
+    @State var error: String = ""
     @FocusState var selectedField: FocusText?
     
     enum FocusText {
         case name
     }
     
+    var isFormValid: Bool {
+        if eventName.isEmpty {
+            error = "Field cannot be empty."
+            return false
+        } else {
+            return true
+        }
+    }
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 15) {
+        VStack {
             topPanel
-            if !valid {
-                Text("Name must contain at least 3 latters")
-                    .font(.subheadline)
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(.red)
+            Spacer()
+            VStack(spacing: 15) {
+                Text("Add Event")
+                    .font(.largeTitle.weight(.bold))
+                    .glassyFont(textColor: .primary)
+                name
+                RoundedRectangle(cornerRadius: 15, style: .continuous)
+                    .frame(maxHeight: 1)
+                    .opacity(0.2)
+                datePicker
+                toggles
             }
-            name
-            Divider()
-            calendar
-            Divider()
-            toggles
+            Spacer()
+            Text(error)
+                .font(.headline.weight(.bold))
+                .glassyFont(textColor: .red)
+                .padding(.horizontal)
+                .frame(maxWidth: .infinity, alignment: .leading)
             saveButton
         }
         .padding()
         .background()
-        .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
-        .shadow(radius: 5, y: 5)
-        .padding()
         .onTapGesture {
             selectedField = .none
         }
@@ -49,16 +62,11 @@ struct AddEventView: View {
     
     var topPanel: some View {
         HStack {
-            Text("Add Event")
-                .font(.title.weight(.bold))
-                .foregroundStyle(.linearGradient(colors: [.primary, .primary.opacity(0.7)], startPoint: .topLeading, endPoint: .bottomTrailing))
             Spacer()
             Button {
                 withAnimation(.easeInOut) {
                     selectedField = .none
                     daysToVM.showAddEventView = false
-                    clearFields()
-                    valid = true
                 }
             } label: {
                 Image(systemName: "xmark")
@@ -72,33 +80,32 @@ struct AddEventView: View {
     }
     
     var name: some View {
-        TextField("Name...", text: $eventName)
-            .font(.callout.weight(.black))
-            .padding()
-            .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
-            .autocorrectionDisabled(true)
-            .focused($selectedField, equals: .name)
-            .submitLabel(.next)
-            .onSubmit {
-                selectedField = .none
-            }
-    }
-    
-    var calendar: some View {
-        DatePicker("Date", selection: $eventDate, displayedComponents: .date)
-            .datePickerStyle(.compact)
+        TextField("Name", text: $eventName)
+                .padding()
+                .background()
+                .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                .selectedField(colors: selectedField == .name ? [.indigo, .blue] : [.clear, .clear])
+                .autocorrectionDisabled(true)
+                .focused($selectedField, equals: .name)
+                .submitLabel(.next)
+                .onSubmit {
+                    selectedField = .none
+                }
+                .onTapGesture {
+                    selectedField = .name
+                }
     }
     
     var toggles: some View {
         VStack {
-                Toggle("Repeat every year", isOn: $isRepeated)
-                Toggle("Make it favorite", isOn: $isFavorite)
+            Toggle("Repeat every year", isOn: $isRepeated)
+            Toggle("Make it favorite", isOn: $isFavorite)
         }
     }
     
-    var background: some View {
-        LinearGradient(colors: [.indigo, .clear], startPoint: .top, endPoint: .bottom)
+    var datePicker: some View {
+        DatePicker("Date", selection: $eventDate, displayedComponents: .date)
+            .datePickerStyle(.compact)
     }
     
     var saveButton: some View {
@@ -110,18 +117,16 @@ struct AddEventView: View {
                 .font(.callout.weight(.black))
                 .frame(maxWidth: .infinity)
                 .foregroundColor(.white)
-                .background(valid ? Color.blue : Color.red)
+                .background(Color.blue)
                 .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
         }
     }
 
     func createNewEvent() {
-        withAnimation(.easeInOut) {
-            if eventName.count < 3 {
-                valid = false
-            } else {
-                valid = true
+        if isFormValid {
+            withAnimation(.easeInOut) {
                 daysToVM.addEvent(name: eventName, description: eventDescription, date: eventDate, isFavorite: isFavorite, isRepeated: isRepeated)
+                daysToVM.reloadWidget()
                 daysToVM.showAddEventView = false
                 clearFields()
             }
@@ -134,16 +139,13 @@ struct AddEventView: View {
         eventDate = Date()
         isFavorite = false
         isRepeated = false
+        error = ""
     }
 }
 
 struct AddEventView_Previews: PreviewProvider {
     static var previews: some View {
-        ZStack {
-            LinearGradient(colors: [.purple, .white], startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea()
             AddEventView()
                 .environmentObject(DaysToViewModel())
-        }
     }
 }

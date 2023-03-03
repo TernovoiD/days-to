@@ -51,6 +51,9 @@ struct PasswordChangeView: View {
                     .onSubmit {
                         selectedField = .repeatPassword
                     }
+                    .onTapGesture {
+                        selectedField = .newPassword
+                    }
                 Divider()
                 SecureField("Repeat new password", text: $repeatPassword)
                     .padding()
@@ -64,11 +67,13 @@ struct PasswordChangeView: View {
                     .onSubmit {
                         selectedField = .none
                     }
+                    .onTapGesture {
+                        selectedField = .repeatPassword
+                    }
             }
             Spacer()
             Text(error)
                 .glassyFont(textColor: .red)
-                .fontWeight(.bold)
                 .padding(.horizontal)
             Button {
                 changePassword()

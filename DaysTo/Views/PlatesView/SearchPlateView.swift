@@ -10,6 +10,7 @@ import SwiftUI
 struct SearchPlateView: View {
     @EnvironmentObject var daysToVM: DaysToViewModel
     @FocusState var selectedField: FocusText?
+    @Binding var selectedTab: Int
     
     enum FocusText {
         case searchField
@@ -30,6 +31,9 @@ struct SearchPlateView: View {
                         .offset(x: 60, y: -80)
                         .frame(width: 120)
                         .offset(x: proxy.frame(in: .global).minX)
+                        .onTapGesture {
+                            selectedField = .none
+                        }
                 )
                 .padding()
         }
@@ -44,6 +48,7 @@ struct SearchPlateView: View {
                 Button {
                     withAnimation(.easeInOut) {
                         daysToVM.showFavoriteOnly.toggle()
+                        selectedField = .none
                     }
                 } label: {
                     HStack {
@@ -59,6 +64,7 @@ struct SearchPlateView: View {
                 Button {
                     withAnimation(.easeInOut) {
                         daysToVM.sevenDays.toggle()
+                        selectedField = .none
                     }
                 } label: {
                     HStack {
@@ -75,9 +81,10 @@ struct SearchPlateView: View {
             }
             .padding(.bottom, 20)
             Text("Looking for something special?")
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .font(.subheadline.weight(.black))
-            ZStack {
+                .padding(.horizontal)
+            HStack {
                 TextField("Search...", text: $daysToVM.textToSearch)
                     .padding()
                     .font(.headline.weight(.black))
@@ -90,15 +97,19 @@ struct SearchPlateView: View {
                     .onSubmit {
                         selectedField = .none
                     }
+                    .onChange(of: selectedTab) { newValue in
+                        selectedField = .none
+                    }
                 Button {
                     withAnimation(.easeInOut) {
                         daysToVM.textToSearch = ""
+                        selectedField = .none
                     }
                 } label: {
                     Image(systemName: "xmark")
                         .font(.headline)
+                        .frame(maxWidth: 20)
                 }
-                .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding()
 
             }
@@ -121,7 +132,7 @@ struct SearchPlateView: View {
 
 struct SearchPlateView_Previews: PreviewProvider {
     static var previews: some View {
-        SearchPlateView()
+        SearchPlateView(selectedTab: .constant(3))
             .environmentObject(DaysToViewModel())
             .background(
                 LinearGradient(colors: [.indigo, .purple], startPoint: .top, endPoint: .bottom)

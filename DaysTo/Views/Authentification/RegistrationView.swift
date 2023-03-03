@@ -60,6 +60,9 @@ struct RegistrationView: View {
                     .onSubmit {
                         selectedField = .email
                     }
+                    .onTapGesture {
+                        selectedField = .name
+                    }
                 Divider()
                 TextField("Email", text: $email)
                     .padding()
@@ -72,6 +75,9 @@ struct RegistrationView: View {
                     .submitLabel(.next)
                     .onSubmit {
                         selectedField = .password
+                    }
+                    .onTapGesture {
+                        selectedField = .email
                     }
                 Divider()
                 TextField("Password", text: $password)
@@ -86,6 +92,9 @@ struct RegistrationView: View {
                     .onSubmit {
                         selectedField = .none
                     }
+                    .onTapGesture {
+                        selectedField = .password
+                    }
             }
             DatePicker("Date of birth", selection: $dateOfBirth, displayedComponents: .date)
                 .datePickerStyle(.compact)
@@ -94,8 +103,9 @@ struct RegistrationView: View {
             Spacer()
             Text(error)
                 .glassyFont(textColor: .red)
-                .fontWeight(.bold)
+                .font(.headline.weight(.bold))
                 .padding(.horizontal)
+                .frame(maxWidth: .infinity, alignment: .leading)
             Button {
                 signUP()
             } label: {
@@ -125,6 +135,8 @@ struct RegistrationView: View {
     func signUP() {
         if isFormValid {
             daysToVM.signUp(userName: name, userEmail: email, userDateOfBirth: dateOfBirth, userPassword: password)
+            daysToVM.reloadWidget()
+            clearForm()
         }
     }
     

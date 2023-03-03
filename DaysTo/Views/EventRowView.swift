@@ -28,15 +28,15 @@ struct EventRowView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .foregroundColor(.white)
         .background(
-            Color(appColorScheme)
-                .matchedGeometryEffect(id: "background\(event.id)", in: namespace)
+            backgroundColor(daysLeft: event.daysTo)
         )
         .mask(
             RoundedRectangle(cornerRadius: 15, style: .continuous)
-                .matchedGeometryEffect(id: "mask\(event.id)", in: namespace)
+//                .matchedGeometryEffect(id: "mask\(event.id)", in: namespace)
         )
         .onTapGesture {
             withAnimation(.easeInOut) {
+                daysToVM.openMenu = false
                 if daysToVM.selectedEvent == event {
                     daysToVM.selectedEvent = nil
                 } else {
@@ -61,7 +61,7 @@ struct EventRowView: View {
                     }
                 }
                 .font(.headline)
-                Text("\(event.daysTo) days")
+                Text(event.daysTo == 0 ? "today" : "\(event.daysTo) \(event.daysToDescription)")
                     .animatableFont(size: 16, weight: .heavy, design: .default)
                     .opacity(0.6)
             }
@@ -76,10 +76,8 @@ struct EventRowView: View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 5) {
                 Text("Date: \(event.date.formatted(date: .abbreviated, time: .omitted))")
-                if event.description == "" {
-                    Text("No additional information")
-                } else {
-                    Text(event.description)
+                if !event.isFutureEvent {
+                    Text("Age: \(event.age)")
                 }
             }
             Spacer()
@@ -97,6 +95,7 @@ struct EventRowView: View {
                 withAnimation(.easeInOut) {
                     daysToVM.showEditEventView = true
                     daysToVM.eventToEdit = event
+                    daysToVM.openMenu = false
                 }
             } label: {
                 Label("Edit", systemImage: "pencil")
@@ -104,6 +103,8 @@ struct EventRowView: View {
             Button {
                 withAnimation(.spring()) {
                     daysToVM.toggleEventFavoriteStatus(event: event)
+                    daysToVM.reloadWidget()
+                    daysToVM.openMenu = false
                 }
             } label: {
                 Label("Favorite", systemImage: event.isFavorite ? "star.fill" : "star")
@@ -112,10 +113,13 @@ struct EventRowView: View {
                 if askBeforeDelete {
                     withAnimation(.easeInOut) {
                         showDeleteConfirmationAlert = true
+                        daysToVM.openMenu = false
                     }
                 } else {
                     withAnimation(.easeInOut) {
                         daysToVM.deleteEvent(event: event)
+                        daysToVM.reloadWidget()
+                        daysToVM.openMenu = false
                     }
                 }
             } label: {
@@ -125,9 +129,22 @@ struct EventRowView: View {
                 Button("DELETE", role: .destructive) {
                     withAnimation(.easeInOut) {
                         daysToVM.deleteEvent(event: event)
+                        daysToVM.reloadWidget()
+                        daysToVM.openMenu = false
                     }
                 }
             }
+        }
+    }
+    
+    func backgroundColor(daysLeft: Int) -> Color {
+        switch daysLeft {
+        case 0:
+            return Color.green
+        case 1...7:
+            return Color.orange
+        default:
+            return Color(appColorScheme)
         }
     }
 }
