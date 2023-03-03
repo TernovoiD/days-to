@@ -38,7 +38,7 @@ struct ResetPasswordView: View {
                 Image(systemName: "xmark")
                     .padding()
                     .glassyFont(textColor: .primary)
-                    .bold()
+//                    .bold()
                     .background(Color.gray.opacity(0.2))
                     .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
                     .frame(maxWidth: .infinity, alignment: .trailing)
@@ -64,11 +64,15 @@ struct ResetPasswordView: View {
                 .onSubmit {
                     selectedField = .none
                 }
+                .onTapGesture {
+                    selectedField = .email
+                }
             Spacer()
             Text(error)
                 .glassyFont(textColor: .red)
-                .fontWeight(.bold)
+                .font(.headline.weight(.bold))
                 .padding(.horizontal)
+                .frame(maxWidth: .infinity, alignment: .leading)
             Button {
                 sendPasswordReset()
             } label: {

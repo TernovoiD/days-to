@@ -55,8 +55,9 @@ struct LoginView: View {
             Spacer()
             Text(error)
                 .glassyFont(textColor: .red)
-                .fontWeight(.bold)
+                .font(.headline.weight(.bold))
                 .padding(.horizontal)
+                .frame(maxWidth: .infinity, alignment: .leading)
             Button {
                 signIN()
             } label: {
@@ -100,6 +101,9 @@ struct LoginView: View {
                 .onSubmit {
                     selectedField = .password
                 }
+                .onTapGesture {
+                    selectedField = .email
+                }
             Divider()
             SecureField("Password", text: $password)
                 .padding()
@@ -113,6 +117,9 @@ struct LoginView: View {
                 .onSubmit {
                     selectedField = .none
                 }
+                .onTapGesture {
+                    selectedField = .password
+                }
         }
     }
     
@@ -120,6 +127,8 @@ struct LoginView: View {
         error = ""
         if isFormValid {
             daysToVM.signIn(userEmail: email, userPassword: password)
+            daysToVM.reloadWidget()
+            clearForm()
         }
     }
     

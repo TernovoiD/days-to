@@ -14,6 +14,23 @@ struct ProgressRingView: View {
     let ringWidth: CGFloat
     @State var fill: Bool = false
     
+    var ringColor: Color {
+        let procent = Double(leftProgress) / Double(allProgress)
+        switch procent {
+        case 0...0.25:
+            return Color.green
+        case 0.25...0.5:
+            return Color.mint
+        case 0.5...0.75:
+            return Color.yellow
+        case 0.75...1.0:
+            return Color.orange
+            
+        default:
+            return Color.indigo
+        }
+    }
+    
     var body: some View {
         ZStack {
             Circle()
@@ -24,7 +41,7 @@ struct ProgressRingView: View {
                 .stroke(style: StrokeStyle(lineWidth: ringWidth, lineCap: .round))
                 .rotation(.degrees(-90))
                 .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
-                .foregroundStyle(.linearGradient(colors: [.orange, .orange, .green], startPoint: .leading, endPoint: .trailing))
+                .foregroundColor(ringColor)
                 .overlay {
                     Text("\(leftProgress)")
                         .font(.title3)
@@ -39,8 +56,8 @@ struct ProgressRingView: View {
 struct ProgressRingView_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
-            Color.blue.ignoresSafeArea()
-            ProgressRingView(allProgress: 34, leftProgress: 5, ringSize: 60, ringWidth: 10)
+            Color.indigo.ignoresSafeArea()
+            ProgressRingView(allProgress: 34, leftProgress: 1, ringSize: 60, ringWidth: 10)
         }
     }
 }

@@ -9,118 +9,112 @@ import SwiftUI
 
 struct EditEventView: View {
     @EnvironmentObject var daysToVM: DaysToViewModel
-    @AppStorage("appColorScheme") var appColorScheme: String = "Indigo"
-    let namespace: Namespace.ID
     
     let eventID: String
     @State var eventName: String = ""
-    @State var eventDescription: String = ""
     @State var eventDate: Date = Date()
+    @State var eventDescription: String = ""
     @State var isFavorite: Bool = false
     @State var isRepeated: Bool = false
-    @State var valid: Bool = true
+    @State var error: String = ""
     @FocusState var selectedField: FocusText?
     
     enum FocusText {
         case name
     }
-
+    
+    var isFormValid: Bool {
+        if eventName.isEmpty {
+            error = "Field cannot be empty."
+            return false
+        } else {
+            return true
+        }
+    }
+    
     var body: some View {
         VStack {
-            VStack(spacing: 10) {
-                topPanel
-                VStack {
-                    name
-                    dateAndToggles
-                }
-            }
-            .padding()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(
-                Color(appColorScheme)
-                    .matchedGeometryEffect(id: "background\(eventID)", in: namespace)
-            )
-            .mask(
+            topPanel
+            Spacer()
+            VStack(spacing: 15) {
+                Text("Edit Event")
+                    .font(.largeTitle.weight(.bold))
+                    .glassyFont(textColor: .primary)
+                name
                 RoundedRectangle(cornerRadius: 15, style: .continuous)
-                    .matchedGeometryEffect(id: "mask\(eventID)", in: namespace)
-            )
-            .padding(.horizontal)
-            saveButton
+                    .frame(maxHeight: 1)
+                    .opacity(0.2)
+                datePicker
+                toggles
+            }
+            Spacer()
+            Text(error)
+                .font(.headline.weight(.bold))
+                .glassyFont(textColor: .red)
                 .padding(.horizontal)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            saveButton
+                .ignoresSafeArea(.keyboard)
         }
+        .padding()
+        .background()
         .onTapGesture {
             selectedField = .none
         }
     }
-
+    
     var topPanel: some View {
         HStack {
-            Text(eventName)
-                    .animatableFont(size: 18, weight: .heavy, design: .default)
-                    .matchedGeometryEffect(id: "title\(eventID)", in: namespace)
-                Spacer()
-                Button {
-                    withAnimation(.easeInOut) {
-                        selectedField = .none
-                        daysToVM.showEditEventView = false
-                        daysToVM.eventToEdit = nil
-                    }
-                } label: {
-                    Image(systemName: "xmark")
-                        .font(.title3.weight(.black))
-                        .padding(10)
-                        .background(.thinMaterial)
-                        .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+            Spacer()
+            Button {
+                withAnimation(.easeInOut) {
+                    selectedField = .none
+                    daysToVM.showEditEventView = false
+                    daysToVM.eventToEdit = nil
                 }
+            } label: {
+                Image(systemName: "xmark")
+                    .font(.title3.weight(.black))
+                    .padding(10)
+                    .foregroundColor(.primary)
+                    .background(.thinMaterial)
+                    .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+            }
         }
-        .foregroundColor(.white)
     }
     
     var name: some View {
         TextField("Name", text: $eventName)
-            .padding()
-            .background()
-            .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
-            .autocorrectionDisabled(true)
-            .focused($selectedField, equals: .name)
-            .submitLabel(.next)
-            .onSubmit {
-                selectedField = .none
-            }
+                .padding()
+                .background()
+                .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                .selectedField(colors: selectedField == .name ? [.indigo, .blue] : [.clear, .clear])
+                .autocorrectionDisabled(true)
+                .focused($selectedField, equals: .name)
+                .submitLabel(.next)
+                .onSubmit {
+                    selectedField = .none
+                }
+                .onTapGesture {
+                    selectedField = .name
+                }
     }
     
-    var dateAndToggles: some View {
+    var datePicker: some View {
+        DatePicker("Date", selection: $eventDate, displayedComponents: .date)
+            .datePickerStyle(.compact)
+    }
+    
+    var toggles: some View {
         VStack {
-            DatePicker("Date", selection: $eventDate, displayedComponents: .date)
-                    .datePickerStyle(.compact)
-            Divider()
             Toggle("Repeat every year", isOn: $isRepeated)
             Toggle("Make it favorite", isOn: $isFavorite)
         }
-        .padding()
-        .background()
-        .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
-    }
-    
-    var description: some View {
-        TextEditor(text: $eventDescription)
-            .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
-            .frame(maxHeight: 150)
-            .colorMultiply(Color.gray.opacity(0.2))
     }
     
     var saveButton: some View {
         Button {
-            withAnimation(.easeInOut) {
-                daysToVM.editEvent(eventID: eventID,
-                                   eventName: eventName,
-                                   eventDescription: eventDescription,
-                                   eventDate: eventDate,
-                                   isFavorite: isFavorite,
-                                   isRepeated: isRepeated)
-                daysToVM.showEditEventView = false
-                daysToVM.eventToEdit = nil
-            }
+            editEvent()
         } label: {
             Text("save".uppercased())
                 .padding()
@@ -131,16 +125,28 @@ struct EditEventView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
         }
     }
+    
+    func editEvent() {
+        if isFormValid {
+            withAnimation(.easeInOut) {
+                    daysToVM.editEvent(eventID: eventID,
+                                       eventName: eventName,
+                                       eventDescription: eventDescription,
+                                       eventDate: eventDate,
+                                       isFavorite: isFavorite,
+                                       isRepeated: isRepeated)
+                daysToVM.reloadWidget()
+                    daysToVM.showEditEventView = false
+                    daysToVM.eventToEdit = nil
+            }
+        }
+    }
 }
 
 struct EditEventView_Previews: PreviewProvider {
     @Namespace static var namespace
     static var previews: some View {
-        ZStack {
-            LinearGradient(colors: [.white, .indigo.opacity(0.4)], startPoint: .topLeading, endPoint: .bottomTrailing)
-                .ignoresSafeArea()
-            EditEventView(namespace: namespace, eventID: "")
-                .environmentObject(DaysToViewModel())
-        }
+        EditEventView(eventID: "")
+            .environmentObject(DaysToViewModel())
     }
 }

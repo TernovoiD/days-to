@@ -18,28 +18,27 @@ struct FavoritePlateView: View {
                 .shadow(color: Color.black.opacity(0.6), radius: 5, x: 0, y: 5)
                 .blur(radius: abs(proxy.frame(in: .global).minX) / 50)
                 .overlay(
-
-                    VStack {
+                    
+                    VStack(spacing: 0) {
                         let scroll = proxy.frame(in: .global).minX
-                                Text("Favorites")
-                                .font(.system(size: 50).weight(.black))
-                                .foregroundStyle(LinearGradient(colors: [.orange, .white], startPoint: .leading, endPoint: .trailing))
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-                                .offset(x: 20, y: -20)
-                                .offset(x: scroll * 1.5)
-                        VStack(alignment: .leading, spacing: 10) {
-                            ForEach(daysToVM.events.filter({ $0.isFavorite}).indices, id: \.self) { index in
-                                    if index < 3 {
-                                        let indexName = "\(index + 1).square"
-                                        let eventName = daysToVM.events.filter({ $0.isFavorite})[index].name 
-                                        HStack {
-                                            Image(systemName: indexName)
-                                            Text(eventName)
-                                        }
-                                            .font(.title)
-                                            .offset(x: scroll * (Double(index) + 1))
-                                    }
+                        Text("Favorites")
+                            .font(.system(size: 50).weight(.black))
+                            .foregroundStyle(LinearGradient(colors: [.orange, .white], startPoint: .leading, endPoint: .trailing))
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .offset(x: 20, y: -20)
+                            .offset(x: scroll * 1.5)
+                        VStack(alignment: .leading, spacing: 15) {
+                            ForEach(daysToVM.events.filter({ $0.isFavorite }).indices, id: \.self) { index in
+                                if index < 4 {
+                                    
+                                    
+                                    let favoriteEvent = daysToVM.events.filter({ $0.isFavorite})[index]
+//                                    let indexName = "\(index + 1).square"
+                                    
+                                    EventShortView(event: favoriteEvent)
+                                        .offset(x: scroll * (Double(index) + 1))
                                 }
+                            }
                         }
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundColor(.white)
@@ -50,14 +49,14 @@ struct FavoritePlateView: View {
                 .padding()
         }
     }
-
+    
     var plate: some View {
         VStack(alignment: .leading, spacing: 8) {
             Spacer()
-//            Button {
-//
-//            } label: {
-//                Label("Show all", systemImage: "ellipsis.circle")
+            //            Button {
+            //
+            //            } label: {
+            //                Label("Show all", systemImage: "ellipsis.circle")
 //                    .foregroundColor(.white)
 //            }
         }

@@ -1,27 +1,24 @@
 //
-//  DaysToApp.swift
-//  DaysTo
+//  DaysToWidgetBundle.swift
+//  DaysToWidget
 //
-//  Created by Danylo Ternovoi on 22.01.2023.
+//  Created by Danylo Ternovoi on 27.02.2023.
 //
 
+import WidgetKit
 import SwiftUI
 import Firebase
 
 @main
-struct DaysToApp: App {
-    @StateObject var daysToVM = DaysToViewModel()
+struct DaysToWidgetBundle: WidgetBundle {
     
     init() {
         FirebaseApp.configure()
         authUserAccessGroup()
     }
     
-    var body: some Scene {
-        WindowGroup {
-            HomeView()
-                .environmentObject(daysToVM)
-        }
+    var body: some Widget {
+        DaysToWidget()
     }
     
     func authUserAccessGroup() {

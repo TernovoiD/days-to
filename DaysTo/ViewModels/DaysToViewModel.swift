@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
@@ -23,6 +24,7 @@ class DaysToViewModel: ObservableObject {
     @Published var showEditEventView: Bool = false
     @Published var showMyAccount: Bool = false
     @Published var showCreditsView: Bool = false
+    @Published var openMenu: Bool = false
     @Published var selectedEvent: EventModel?
     @Published var eventToEdit: EventModel?
     
@@ -41,6 +43,10 @@ class DaysToViewModel: ObservableObject {
         getUserInfo()
     }
     
+    func reloadWidget() {
+            WidgetCenter.shared.reloadTimelines(ofKind: "DaysToWidget")
+    }
+    
     // MARK: Authentification
     
     func signUp(userName: String, userEmail: String, userDateOfBirth: Date, userPassword: String) {
@@ -52,6 +58,7 @@ class DaysToViewModel: ObservableObject {
                 self.signIn(userEmail: userEmail, userPassword: userPassword)
                 self.getUserInfo()
                 self.addUser(name: userName, email: userEmail, dateOfBirth: userDateOfBirth)
+                self.sendEmailVerification()
             }
         }
     }
@@ -113,27 +120,13 @@ class DaysToViewModel: ObservableObject {
                 self.userID = user.uid
                 self.fetchUserInfo()
                 self.fetchUserEvents()
+                self.reloadWidget()
             } else {
                 self.isSignedIn = false
                 self.userID = ""
             }
         }
     }
-    
-//    func reauthentificateUser() {
-//        let user = firebaseAuth.currentUser
-//        var credential = firebaseAuth.emai
-//
-//        // Prompt the user to re-provide their sign-in credentials
-//
-//        user?.reauthenticate(with: credential) { error in
-//          if let error = error {
-//            // An error happened.
-//          } else {
-//            // User re-authenticated.
-//          }
-//        }
-//    }
     
     func deleteUser() {
         let user = firebaseAuth.currentUser

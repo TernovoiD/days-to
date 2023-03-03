@@ -10,7 +10,7 @@ import SwiftUI
 struct NavBarView: View {
     @EnvironmentObject var daysToVM: DaysToViewModel
     @Binding var hasScrolled: Bool
-    @State var openMenu: Bool = false
+//    @State var openMenu: Bool = false
     var namespace: Namespace.ID
     var title: String = "Navigation"
     
@@ -21,6 +21,12 @@ struct NavBarView: View {
                 .padding(hasScrolled ? 7 : 0)
                 .background(.ultraThinMaterial.opacity(hasScrolled ? 1 : 0))
                 .clipShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
+                .onTapGesture {
+                    withAnimation(.easeInOut) {
+                        daysToVM.openMenu = false
+                        daysToVM.selectedEvent = nil
+                    }
+                }
             Spacer()
             menu
         }
@@ -37,21 +43,22 @@ struct NavBarView: View {
             VStack(alignment: .leading, spacing: 10) {
                 Button {
                     withAnimation(.easeInOut) {
-                        openMenu.toggle()
+                        daysToVM.openMenu.toggle()
+//                        daysToVM.selectedEvent = nil
                     }
                 } label: {
-                    if openMenu {
+                    if daysToVM.openMenu {
                         Label("Close", systemImage: "xmark")
                     } else {
                         Image(systemName: "text.justify")
                     }
                 }
-                if openMenu {
+                if daysToVM.openMenu {
                     Divider()
                         .frame(maxWidth: 100)
                     Button {
                         withAnimation(.easeInOut) {
-                            openMenu = false
+                            daysToVM.openMenu = false
                             daysToVM.showAddEventView = true
                         }
                     } label: {
@@ -63,7 +70,7 @@ struct NavBarView: View {
                     }
                     Button {
                         withAnimation(.easeInOut) {
-                            openMenu = false
+                            daysToVM.openMenu = false
                             daysToVM.showMyAccount = true
                         }
                     } label: {
@@ -75,7 +82,7 @@ struct NavBarView: View {
                     }
                     Button {
                         withAnimation(.easeInOut) {
-                            openMenu = false
+                            daysToVM.openMenu = false
                             daysToVM.showSettingsView = true
                         }
                     } label: {
@@ -87,7 +94,7 @@ struct NavBarView: View {
                     }
                     Button {
                         withAnimation(.easeInOut) {
-                            openMenu = false
+                            daysToVM.openMenu = false
                             daysToVM.showCreditsView = true
                         }
                     } label: {
@@ -97,12 +104,25 @@ struct NavBarView: View {
                             Text("Credits")
                         }
                     }
+//                    Button {
+//                        withAnimation(.easeInOut) {
+//                            daysToVM.openMenu = false
+//                            daysToVM.reloadWidget()
+//                        }
+//                    } label: {
+//                        HStack {
+//                            Image(systemName: "goforward")
+//                                .frame(maxWidth: 20)
+//                            Text("Reload Widget")
+//                        }
+//                    }
                     Divider()
                         .frame(maxWidth: 100)
                     Button {
                         withAnimation(.easeInOut) {
-                            openMenu = false
+                            daysToVM.openMenu = false
                             daysToVM.signOut()
+                            daysToVM.reloadWidget()
                         }
                     } label: {
                         HStack {
@@ -116,14 +136,14 @@ struct NavBarView: View {
             .font(.headline)
         }
         .font(hasScrolled ? .title3.bold() : .largeTitle.weight(.bold))
-        .padding(openMenu ? 15 : 0)
+        .padding(daysToVM.openMenu ? 15 : 0)
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
     
     func toggleMenu() {
         withAnimation(.easeInOut) {
-            openMenu.toggle()
+            daysToVM.openMenu.toggle()
         }
     }
 }

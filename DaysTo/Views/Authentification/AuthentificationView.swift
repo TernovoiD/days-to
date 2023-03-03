@@ -10,7 +10,7 @@ import SwiftUI
 struct AuthentificationView: View {
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(alignment: .leading) {
                 Spacer()
                 InstrucrtionsView()
                 Spacer()
@@ -40,14 +40,13 @@ struct AuthentificationView: View {
                 Spacer()
                 VStack(alignment: .leading, spacing: 5) {
                     Text("Why do I need personal account?")
+                        .font(.headline.weight(.bold))
                         .glassyFont(textColor: .primary)
-                        .fontWeight(.bold)
                     Text("- It makes your data safe.")
                     Text("- It will grant You access from different devices.")
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
                 .glassyFont(textColor: .secondary)
-                .padding(.horizontal)
+                .padding()
             }
         }
     }
