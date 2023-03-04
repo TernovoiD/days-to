@@ -219,7 +219,7 @@ Button that leads to sign user in */
 "Verification email was sent to: %@" = "Лист відправдено: %@";
 
 /* No comment provided by engineer. */
-"Version 0.1.1" = "Версія 0.1.1";
+"Version 0.1.0" = "Версія 0.1.0";
 
 /* Desciption of creation account purposes */
 "Why do I need personal account?" = "Навіщо потрібен аккаунт?";
