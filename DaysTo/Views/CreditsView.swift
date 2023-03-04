@@ -35,7 +35,7 @@ struct CreditsView: View {
             Spacer()
             VStack(spacing: 2) {
                 Text("DaysTo")
-                Text("Version 0.1.1")
+                Text("Version 0.1.0")
                 Text("Created by Danylo Ternovoi")
                     .font(.headline)
             }
