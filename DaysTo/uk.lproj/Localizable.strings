@@ -1,0 +1,229 @@
+/* No comment provided by engineer. */
+"- Firebase Auth by Google" = "- Firebase Auth by Google";
+
+/* No comment provided by engineer. */
+"- Firestore by Google" = "- Firestore by Google";
+
+/* Point 1 to create account */
+"- It makes your data safe." = "- Надійне зберігання інформації";
+
+/* Point 2 to create account */
+"- It will grant You access from different devices." = "- Доступ з будь якого пристрою";
+
+/* No comment provided by engineer. */
+"- SwiftUI by Apple" = "- SwiftUI by Apple";
+
+/* No comment provided by engineer. */
+"- Track days left to anniversary of events in past" = "- Відслідковуй дні до річниць минулих подій";
+
+/* Description of DaysTo App */
+"- Track days left to future events" = "- Відслідковуй дні до майбутніх подій";
+
+/* No comment provided by engineer. */
+"- WidgetKIT by Apple" = "- WidgetKIT by Apple";
+
+/* DaysTo credits */
+"**DaysTo** is a non-commercial program built as a training project to make our everyday life easier. The application was created using Swift programing language on MVVM architectural pattern with frameworks:" = "**DaysTo** це некомерційня програма що створена як тренувальний проєкт задля полегшення нашого повсякденного життя. Додаток було побудовано мовою програмування **Swift** з використання архітектурного паттерну **MVVM** та бібліотек:";
+
+/* No comment provided by engineer. */
+"%@" = "%@";
+
+/* No comment provided by engineer. */
+"%@ D" = "%@ Д.";
+
+/* No comment provided by engineer. */
+"7 Days" = "7 Днів";
+
+/* Button that leads to create new Event */
+"Add" = "Додати";
+
+/* Add Event screen title */
+"Add Event" = "Додати подію";
+
+/* DaysTo instructions Step 3 title */
+"Add Widget" = "Додай віджет";
+
+/* EventPlate Age of Event */
+"Age: %@" = "Вік: %@";
+
+/* No comment provided by engineer. */
+"Are you shoure to delete this Event?" = "Ви дійсно хочете видалити цю подію?";
+
+/* No comment provided by engineer. */
+"Ask before delete" = "Запитати перед видаленням";
+
+/* DaysTo instructions Step 2 description */
+"Birthday, wedding, the day you met your love or will become graduated. Any future or past event can be added!" = "День народження, річниця одруження або запланована подорож. Будь яка подія може бути додана!";
+
+/* No comment provided by engineer. */
+"Change" = "Змінити";
+
+/* No comment provided by engineer. */
+"Change password" = "Змінити пароль";
+
+/* Button that leads to clear all search filters */
+"Clear all filters" = "Видалити фільтри";
+
+/* No comment provided by engineer. */
+"Close" = "Сховати";
+
+/* Choose app color scheme */
+"Color scheme:" = "Тема:";
+
+/* Registration screen main titile */
+"Create an account" = "Створити аккаунт";
+
+/* DaysTo instructions Step 1 title */
+"Create Event" = "Додай подію";
+
+/* This button leads to Registration screen */
+"Create new account" = "Створити новий аккаунт";
+
+/* No comment provided by engineer. */
+"Created by Danylo Ternovoi" = "Created by Danylo Ternovoi";
+
+/* No comment provided by engineer. */
+"Credits" = "Інформація";
+
+/* No comment provided by engineer. */
+"Date" = "Дата";
+
+/* No comment provided by engineer. */
+"Date of birth" = "Дата народження";
+
+/* EventPlate Date of Event */
+"Date: %@" = "Дата: %@";
+
+/* No comment provided by engineer. */
+"Days to: %@" = "Днів до події: %@";
+
+/* No comment provided by engineer. */
+"Days until next" = "Загальні";
+
+/* No comment provided by engineer. */
+"DaysTo" = "DaysTo";
+
+/* DaysTo instructions Step 2 description */
+"DaysTo will show your events as a handy list with nearest events always on top!" = "DaysTo створить зручний список з найближчими подіями завжди на видному місці!";
+
+/* No comment provided by engineer. */
+"Delete" = "Видалити";
+
+/* No comment provided by engineer. */
+"DELETE" = "ВИДАЛИТИ";
+
+/* No comment provided by engineer. */
+"Delete account" = "Видалити аккаунт";
+
+/* DaysTo instructions Step 3 description */
+"Don't miss any remarkable day in your life with a brand new Widget! Nevet before it was so easy!" = "Жодна важлива подія не залишиться без уваги з новим віджетом! **DaysTo Widget** зручніше аніж будь коли!";
+
+/* No comment provided by engineer. */
+"Edit" = "Редагувати";
+
+/* Edit Event screen title */
+"Edit Event" = "Редагувати";
+
+/* No comment provided by engineer. */
+"Email" = "Електронна пошта";
+
+/* No comment provided by engineer. */
+"Favorite" = "Особливі";
+
+/* No comment provided by engineer. */
+"Favorites" = "Особливі";
+
+/* No comment provided by engineer. */
+"Filter:" = "Фільтр:";
+
+/* Button that leads to reset password screen */
+"Forgot password?" = "Забули пароль?";
+
+/* Reset password screen description */
+"Instructions will be sent on your email" = "Інструкції буде відправлено на електронну пошту";
+
+/* Login screen title */
+"Login" = "Вхід";
+
+/* No comment provided by engineer. */
+"Looking for something special?" = "Потрібне щось конкретне?";
+
+/* No comment provided by engineer. */
+"Make it favorite" = "Додати до особливих";
+
+/* No comment provided by engineer. */
+"Month" = "Місяць";
+
+/* No comment provided by engineer. */
+"My account" = "Мій аккаунт";
+
+/* No comment provided by engineer. */
+"Name" = "Імʼя";
+
+/* No comment provided by engineer. */
+"New password" = "Новий пароль";
+
+/* No comment provided by engineer. */
+"OK" = "OK";
+
+/* No comment provided by engineer. */
+"Password" = "Пароль";
+
+/* No comment provided by engineer. */
+"Repeat every year" = "Повторювати кожен рік";
+
+/* No comment provided by engineer. */
+"Repeat new password" = "Повторити пароль";
+
+/* Button that leads to send email with instructions to reset password */
+"Reset" = "Далі";
+
+/* Reset password screen title */
+"Reset password" = "Змінити пароль";
+
+/* Button that leads to save edited event */
+"SAVE" = "Зберегти";
+
+/* No comment provided by engineer. */
+"Search..." = "Шукати...";
+
+/* No comment provided by engineer. */
+"Send verification email" = "Відправити лист верифікації";
+
+/* Setting screen title */
+"Settings" = "Налаштування";
+
+/* This button leads to Login screen
+Button that leads to sign user in */
+"Sign In" = "Увійти";
+
+/* No comment provided by engineer. */
+"Sign Out" = "Вийти";
+
+/* Button that leads to create new account */
+"Sign Up" = "Зареєструватися";
+
+/* No comment provided by engineer. */
+"Tap to add Event" = "Додати подію";
+
+/* No comment provided by engineer. */
+"This will delete your account" = "Аккаунт буде видалено назавжди";
+
+/* No comment provided by engineer. */
+"today" = "сьогодні";
+
+/* DaysTo instructions Step 2 title */
+"Track Events" = "Слідкуй за подіями";
+
+/* No comment provided by engineer. */
+"Verification email was sent to: %@" = "Лист відправдено: %@";
+
+/* No comment provided by engineer. */
+"Version 0.1.1" = "Версія 0.1.1";
+
+/* Desciption of creation account purposes */
+"Why do I need personal account?" = "Навіщо потрібен аккаунт?";
+
+/* No comment provided by engineer. */
+"Year" = "Рік";
+

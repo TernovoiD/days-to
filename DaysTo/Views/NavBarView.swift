@@ -10,7 +10,6 @@ import SwiftUI
 struct NavBarView: View {
     @EnvironmentObject var daysToVM: DaysToViewModel
     @Binding var hasScrolled: Bool
-//    @State var openMenu: Bool = false
     var namespace: Namespace.ID
     var title: String = "Navigation"
     
@@ -21,13 +20,13 @@ struct NavBarView: View {
                 .padding(hasScrolled ? 7 : 0)
                 .background(.ultraThinMaterial.opacity(hasScrolled ? 1 : 0))
                 .clipShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
+                .frame(maxWidth: 150, alignment: .leading)
                 .onTapGesture {
                     withAnimation(.easeInOut) {
                         daysToVM.openMenu = false
                         daysToVM.selectedEvent = nil
                     }
                 }
-            Spacer()
             menu
         }
         .padding(.horizontal)
@@ -44,7 +43,7 @@ struct NavBarView: View {
                 Button {
                     withAnimation(.easeInOut) {
                         daysToVM.openMenu.toggle()
-//                        daysToVM.selectedEvent = nil
+                        daysToVM.selectedEvent = nil
                     }
                 } label: {
                     if daysToVM.openMenu {
@@ -99,23 +98,11 @@ struct NavBarView: View {
                         }
                     } label: {
                         HStack {
-                            Image(systemName: "c.circle")
+                            Image(systemName: "i.circle")
                                 .frame(maxWidth: 20)
                             Text("Credits")
                         }
                     }
-//                    Button {
-//                        withAnimation(.easeInOut) {
-//                            daysToVM.openMenu = false
-//                            daysToVM.reloadWidget()
-//                        }
-//                    } label: {
-//                        HStack {
-//                            Image(systemName: "goforward")
-//                                .frame(maxWidth: 20)
-//                            Text("Reload Widget")
-//                        }
-//                    }
                     Divider()
                         .frame(maxWidth: 100)
                     Button {
@@ -139,6 +126,7 @@ struct NavBarView: View {
         .padding(daysToVM.openMenu ? 15 : 0)
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+        .frame(maxWidth: .infinity, alignment: .trailing)
     }
     
     func toggleMenu() {

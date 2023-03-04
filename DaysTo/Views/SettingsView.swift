@@ -34,7 +34,7 @@ struct SettingsView: View {
     
     var topPanel: some View {
         HStack {
-            Text("Settings")
+            Text("Settings", comment: "Setting screen title")
                 .font(.title.weight(.bold))
                 .foregroundStyle(.linearGradient(colors: [.primary, .primary.opacity(0.7)], startPoint: .topLeading, endPoint: .bottomTrailing))
             Spacer()
@@ -60,7 +60,7 @@ struct SettingsView: View {
     
     var colors: some View {
             HStack {
-                Text("Color theme:")
+                Text("Color scheme:", comment: "Choose app color scheme")
                     .font(.title3)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Spacer()
@@ -76,20 +76,6 @@ struct SettingsView: View {
 
                 }
                 Spacer()
-        }
-    }
-    
-    var closeButton: some View {
-        Section {
-            Button {
-                withAnimation(.easeInOut) {
-                    daysToVM.showSettingsView = false
-                }
-            } label: {
-                Text("Close")
-                    .frame(maxWidth: .infinity)
-                    .foregroundColor(.red)
-            }
         }
     }
 }

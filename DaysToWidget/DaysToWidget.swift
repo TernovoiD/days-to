@@ -168,7 +168,7 @@ struct EventView: View {
                     }
                 }
                 HStack {
-                    Text(event.date.simpleDate(formatStyle: "dd.mm.yyyy"))
+                    Text(event.date.simpleDate(formatStyle: "dd.MM.yyyy"))
                         .glassyFont(textColor: .yellow.opacity(0.7))
                         .font(.caption2)
                     if !event.isFutureEvent {

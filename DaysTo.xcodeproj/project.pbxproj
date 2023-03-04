@@ -16,6 +16,8 @@
 		8121F0182997F7BC00E705E5 /* AnimatableFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8121F0172997F7BB00E705E5 /* AnimatableFont.swift */; };
 		81283F7E298FBD2C0092E7AE /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81283F7D298FBD2C0092E7AE /* Animations.swift */; };
 		81283F89299047B30092E7AE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81283F88299047B30092E7AE /* SettingsView.swift */; };
+		81318B1129B359F000768BF3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81318B0F29B359F000768BF3 /* InfoPlist.strings */; };
+		81318B1429B359F000768BF3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81318B1229B359F000768BF3 /* InfoPlist.strings */; };
 		8147328C299B81BE008B2FBC /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8147328B299B81BE008B2FBC /* UserModel.swift */; };
 		81473290299B9D98008B2FBC /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8147328F299B9D98008B2FBC /* LoginView.swift */; };
 		81473294299B9DB9008B2FBC /* RegistrationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81473293299B9DB9008B2FBC /* RegistrationView.swift */; };
@@ -63,6 +65,8 @@
 		81BABF1829AB9FCD00D388BA /* PasswordChangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BABF1729AB9FCD00D388BA /* PasswordChangeView.swift */; };
 		81BDF8C8298F15D100B73386 /* PreferenceKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BDF8C7298F15D100B73386 /* PreferenceKeys.swift */; };
 		81BDF8CA298F160D00B73386 /* NavBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BDF8C9298F160D00B73386 /* NavBarView.swift */; };
+		81BF50BD29B354A300ADF7D8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81BF50BB29B354A300ADF7D8 /* Localizable.strings */; };
+		81BF50C029B354A300ADF7D8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 81BF50BE29B354A300ADF7D8 /* Localizable.strings */; };
 		81F9427E29AF861200D22147 /* EventShortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9427D29AF861200D22147 /* EventShortView.swift */; };
 		81F9427F29AF868F00D22147 /* EventShortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F9427D29AF861200D22147 /* EventShortView.swift */; };
 		81FD9C2C29998DA900128B8C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 81FD9C2B29998DA900128B8C /* GoogleService-Info.plist */; };
@@ -103,6 +107,8 @@
 		8121F0172997F7BB00E705E5 /* AnimatableFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatableFont.swift; sourceTree = "<group>"; };
 		81283F7D298FBD2C0092E7AE /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		81283F88299047B30092E7AE /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		81318B1029B359F000768BF3 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		81318B1329B359F000768BF3 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		8147328B299B81BE008B2FBC /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		8147328F299B9D98008B2FBC /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		81473293299B9DB9008B2FBC /* RegistrationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationView.swift; sourceTree = "<group>"; };
@@ -148,6 +154,8 @@
 		81BABF1729AB9FCD00D388BA /* PasswordChangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordChangeView.swift; sourceTree = "<group>"; };
 		81BDF8C7298F15D100B73386 /* PreferenceKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceKeys.swift; sourceTree = "<group>"; };
 		81BDF8C9298F160D00B73386 /* NavBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarView.swift; sourceTree = "<group>"; };
+		81BF50BC29B354A300ADF7D8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		81BF50BF29B354A300ADF7D8 /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
 		81F9427D29AF861200D22147 /* EventShortView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventShortView.swift; sourceTree = "<group>"; };
 		81FD9C2B29998DA900128B8C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -251,6 +259,8 @@
 				818154A329AD5249008A0BB5 /* DaysToWidget.swift */,
 				818154A529AD524B008A0BB5 /* Assets.xcassets */,
 				818154A729AD524B008A0BB5 /* Info.plist */,
+				81318B1229B359F000768BF3 /* InfoPlist.strings */,
+				81BF50BE29B354A300ADF7D8 /* Localizable.strings */,
 			);
 			path = DaysToWidget;
 			sourceTree = "<group>";
@@ -279,6 +289,8 @@
 			isa = PBXGroup;
 			children = (
 				814DA52A29AD1EAD002A8B30 /* Info.plist */,
+				81318B0F29B359F000768BF3 /* InfoPlist.strings */,
+				81BF50BB29B354A300ADF7D8 /* Localizable.strings */,
 				81BABF1129AB6BDF00D388BA /* DaysTo.entitlements */,
 				81A79F81297D450600AC14F9 /* DaysToApp.swift */,
 				816FA3D92986A1B600674DFC /* Views */,
@@ -438,6 +450,7 @@
 			knownRegions = (
 				en,
 				Base,
+				uk,
 			);
 			mainGroup = 81A79F75297D450600AC14F9;
 			packageReferences = (
@@ -459,6 +472,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				818154A629AD524B008A0BB5 /* Assets.xcassets in Resources */,
+				81318B1429B359F000768BF3 /* InfoPlist.strings in Resources */,
+				81BF50C029B354A300ADF7D8 /* Localizable.strings in Resources */,
 				818154B629AD5307008A0BB5 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -467,6 +482,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81BF50BD29B354A300ADF7D8 /* Localizable.strings in Resources */,
+				81318B1129B359F000768BF3 /* InfoPlist.strings in Resources */,
 				81A79F89297D450700AC14F9 /* Preview Assets.xcassets in Resources */,
 				81FD9C2C29998DA900128B8C /* GoogleService-Info.plist in Resources */,
 				81A79F86297D450700AC14F9 /* Assets.xcassets in Resources */,
@@ -545,6 +562,41 @@
 			targetProxy = 818154A829AD524B008A0BB5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		81318B0F29B359F000768BF3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81318B1029B359F000768BF3 /* uk */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		81318B1229B359F000768BF3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81318B1329B359F000768BF3 /* uk */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		81BF50BB29B354A300ADF7D8 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81BF50BC29B354A300ADF7D8 /* uk */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		81BF50BE29B354A300ADF7D8 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81BF50BF29B354A300ADF7D8 /* uk */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		818154AC29AD524B008A0BB5 /* Debug */ = {
@@ -655,7 +707,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -709,7 +761,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

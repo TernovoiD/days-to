@@ -17,8 +17,9 @@ struct CreditsView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
             VStack(alignment: .leading, spacing: 10) {
-                Text("**DaysTo** is a non-commercial program built as a training project to make our everyday life easier. The application was created using Swift programing language on MVVM architectural pattern with frameworks:")
+                Text("**DaysTo** is a non-commercial program built as a training project to make our everyday life easier. The application was created using Swift programing language on MVVM architectural pattern with frameworks:", comment: "DaysTo credits")
                     .glassyFont(textColor: .primary)
+                    .font(.subheadline)
                 Text("- SwiftUI by Apple")
                     .font(.headline)
                 Text("- WidgetKIT by Apple")

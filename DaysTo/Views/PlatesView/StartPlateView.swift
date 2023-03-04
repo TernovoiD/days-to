@@ -45,7 +45,7 @@ struct StartPlateView: View {
                     )
                     .clipShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
             }
-            Text("- Track days left to future events")
+            Text("- Track days left to future events", comment: "Description of DaysTo App")
             Text("- Track days left to anniversary of events in past")
         }
         .font(.footnote.weight(.medium))

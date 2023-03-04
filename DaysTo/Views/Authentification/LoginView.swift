@@ -38,7 +38,7 @@ struct LoginView: View {
     var body: some View {
         VStack {
             Spacer()
-            Text("Login")
+            Text("Login", comment: "Login screen title")
                 .padding(10)
                 .font(.title.weight(.black))
                 .glassyFont(textColor: .primary)
@@ -46,7 +46,7 @@ struct LoginView: View {
             Button {
                 showResetPasswordView = true
             } label: {
-                Text("Forgot password?")
+                Text("Forgot password?", comment: "Button that leads to reset password screen")
                     .glassyFont(textColor: Color.blue)
                     .font(.callout)
                     .padding(.horizontal)
@@ -61,7 +61,7 @@ struct LoginView: View {
             Button {
                 signIN()
             } label: {
-                Text("Sign In")
+                Text("Sign In", comment: "Button that leads to sign user in")
                     .frame(maxWidth: .infinity)
                     .padding()
                     .foregroundColor(.white)

@@ -17,7 +17,7 @@ struct AuthentificationView: View {
                 VStack {
                     NavigationLink(destination: LoginView()) {
                         HStack {
-                            Text("Sign In")
+                            Text("Sign In", comment: "This button leads to Login screen")
                             Spacer()
                             Image(systemName: "chevron.right")
                         }
@@ -27,7 +27,7 @@ struct AuthentificationView: View {
                     }
                     NavigationLink(destination: RegistrationView()) {
                         HStack {
-                            Text("Create new account")
+                            Text("Create new account", comment: "This button leads to Registration screen")
                             Spacer()
                             Image(systemName: "chevron.right")
                         }
@@ -39,11 +39,11 @@ struct AuthentificationView: View {
                 .padding(.horizontal)
                 Spacer()
                 VStack(alignment: .leading, spacing: 5) {
-                    Text("Why do I need personal account?")
+                    Text("Why do I need personal account?", comment: "Desciption of creation account purposes")
                         .font(.headline.weight(.bold))
                         .glassyFont(textColor: .primary)
-                    Text("- It makes your data safe.")
-                    Text("- It will grant You access from different devices.")
+                    Text("- It makes your data safe.", comment: "Point 1 to create account")
+                    Text("- It will grant You access from different devices.", comment: "Point 2 to create account")
                 }
                 .glassyFont(textColor: .secondary)
                 .padding()

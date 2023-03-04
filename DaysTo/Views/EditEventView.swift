@@ -37,7 +37,7 @@ struct EditEventView: View {
             topPanel
             Spacer()
             VStack(spacing: 15) {
-                Text("Edit Event")
+                Text("Edit Event", comment: "Edit Event screen title")
                     .font(.largeTitle.weight(.bold))
                     .glassyFont(textColor: .primary)
                 name
@@ -116,7 +116,7 @@ struct EditEventView: View {
         Button {
             editEvent()
         } label: {
-            Text("save".uppercased())
+            Text("SAVE", comment: "Button that leads to save edited event")
                 .padding()
                 .font(.callout.weight(.black))
                 .frame(maxWidth: .infinity)
