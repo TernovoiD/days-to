@@ -90,10 +90,14 @@ struct AccountView: View {
                     Button("DELETE", role: .destructive) {
                         withAnimation(.easeInOut) {
                             daysToVM.deleteUser()
+                            daysToVM.signOut()
                             daysToVM.reloadWidget()
                             daysToVM.showMyAccount = false
                         }
                     }
+                }
+                .alert(daysToVM.alertMessage, isPresented: $daysToVM.alert) {
+                    Button("OK", role: .cancel) { daysToVM.alert = false }
                 }
             }
         }

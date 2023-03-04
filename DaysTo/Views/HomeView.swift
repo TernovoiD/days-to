@@ -124,7 +124,7 @@ struct HomeView: View {
             }
         } label: {
             HStack {
-                Text("Clear all filters")
+                Text("Clear all filters", comment: "Button that leads to clear all search filters")
                 Image(systemName: "xmark")
             }
             .padding(5)

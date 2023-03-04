@@ -44,12 +44,12 @@ struct ResetPasswordView: View {
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
             Spacer()
-            Text("Reset password")
+            Text("Reset password", comment: "Reset password screen title")
                 .padding(10)
                 .font(.title.weight(.black))
                 .glassyFont(textColor: .primary)
                 .frame(maxWidth: .infinity)
-            Text("Instructions will be sent on your email")
+            Text("Instructions will be sent on your email", comment: "Reset password screen description")
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .glassyFont(textColor: .secondary)
                 .padding(.horizontal)
@@ -76,7 +76,7 @@ struct ResetPasswordView: View {
             Button {
                 sendPasswordReset()
             } label: {
-                Text("Reset")
+                Text("Reset", comment: "Button that leads to send email with instructions to reset password")
                     .frame(maxWidth: .infinity)
                     .padding()
                     .foregroundColor(.white)

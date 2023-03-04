@@ -49,6 +49,7 @@ struct PlatesView: View {
                 daysToVM.textToSearch = ""
                 daysToVM.showFavoriteOnly = false
                 daysToVM.sevenDays = false
+                daysToVM.selectedEvent = nil
             }
         }
     }
@@ -56,7 +57,11 @@ struct PlatesView: View {
 
 struct PlatesView_Previews: PreviewProvider {
     static var previews: some View {
-        PlatesView()
-            .environmentObject(DaysToViewModel())
+        ZStack {
+            LinearGradient(colors: [.indigo, .blue], startPoint: .topLeading, endPoint: .bottomTrailing)
+                .ignoresSafeArea()
+            PlatesView()
+                .environmentObject(DaysToViewModel())
+        }
     }
 }

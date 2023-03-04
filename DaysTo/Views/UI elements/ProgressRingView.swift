@@ -43,7 +43,7 @@ struct ProgressRingView: View {
                 .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
                 .foregroundColor(ringColor)
                 .overlay {
-                    Text("\(leftProgress)")
+                    Text("\(String(leftProgress))")
                         .font(.title3)
                         .foregroundColor(.white)
                 }

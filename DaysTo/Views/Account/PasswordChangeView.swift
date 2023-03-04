@@ -74,7 +74,9 @@ struct PasswordChangeView: View {
             Spacer()
             Text(error)
                 .glassyFont(textColor: .red)
+                .font(.headline.weight(.bold))
                 .padding(.horizontal)
+                .frame(maxWidth: .infinity, alignment: .leading)
             Button {
                 changePassword()
             } label: {
@@ -105,6 +107,9 @@ struct PasswordChangeView: View {
         error = ""
         if isFormValid {
             daysToVM.updatePassword(password: newPassword)
+            withAnimation(.easeInOut) {
+                daysToVM.showMyAccount = false
+            }
         }
     }
     

@@ -32,18 +32,18 @@ struct EventShortView: View {
                 }
                 HStack {
                     if !event.isFutureEvent {
-                        Text("Age: \(event.age)")
+                        Text("Age: \(String(event.age))")
                             .glassyFont(textColor: .white.opacity(0.7))
                             .font(.caption2.weight(.bold))
-                        
+
                     }
-                    Text(event.date.simpleDate(formatStyle: "dd.mm.yyyy"))
+                    Text(event.date.simpleDate(formatStyle: "dd.MM.yyyy"))
                         .glassyFont(textColor: .yellow.opacity(0.7))
                         .font(.caption2.weight(.bold))
                 }
             }
             Spacer()
-                Text("\(event.daysTo) D")
+                Text("\(String(event.daysTo)) D")
                 .padding(.vertical, 1)
                 .padding(.horizontal, 5)
                 .glassyFont(textColor: .white)

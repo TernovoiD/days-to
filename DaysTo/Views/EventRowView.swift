@@ -54,14 +54,13 @@ struct EventRowView: View {
                 HStack {
                     Text(event.name)
                         .animatableFont(size: 18, weight: .heavy, design: .default)
-                        .matchedGeometryEffect(id: "title\(event.id)", in: namespace)
                     if event.isFavorite {
                         Image(systemName: "star.fill")
                             .foregroundColor(.yellow)
                     }
                 }
                 .font(.headline)
-                Text(event.daysTo == 0 ? "today" : "\(event.daysTo) \(event.daysToDescription)")
+                Text(event.daysTo == 0 ? "today" : "Days to: \(String(event.daysTo))", comment: "EventPlate How many days left to Event")
                     .animatableFont(size: 16, weight: .heavy, design: .default)
                     .opacity(0.6)
             }
@@ -75,9 +74,9 @@ struct EventRowView: View {
     var additionalInfo: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 5) {
-                Text("Date: \(event.date.formatted(date: .abbreviated, time: .omitted))")
+                Text("Date: \(event.date.formatted(date: .abbreviated, time: .omitted))", comment: "EventPlate Date of Event")
                 if !event.isFutureEvent {
-                    Text("Age: \(event.age)")
+                    Text("Age: \(String(event.age))", comment: "EventPlate Age of Event")
                 }
             }
             Spacer()

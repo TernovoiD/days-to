@@ -35,7 +35,7 @@ struct AddEventView: View {
             topPanel
             Spacer()
             VStack(spacing: 15) {
-                Text("Add Event")
+                Text("Add Event", comment: "Add Event screen title")
                     .font(.largeTitle.weight(.bold))
                     .glassyFont(textColor: .primary)
                 name
@@ -112,7 +112,7 @@ struct AddEventView: View {
         Button {
             createNewEvent()
         } label: {
-            Text("save".uppercased())
+            Text("Add", comment: "Button that leads to create new Event")
                 .padding()
                 .font(.callout.weight(.black))
                 .frame(maxWidth: .infinity)

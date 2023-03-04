@@ -43,7 +43,7 @@ struct RegistrationView: View {
     var body: some View {
         VStack {
             Spacer()
-            Text("Create an account")
+            Text("Create an account", comment: "Registration screen main titile")
                 .padding(10)
                 .font(.title.weight(.black))
                 .glassyFont(textColor: .primary)
@@ -80,7 +80,7 @@ struct RegistrationView: View {
                         selectedField = .email
                     }
                 Divider()
-                TextField("Password", text: $password)
+                SecureField("Password", text: $password)
                     .padding()
                     .selectedField(colors: selectedField == .password ? [.indigo, .blue] : [.clear, .clear])
                     .focused($selectedField, equals: .password)
@@ -109,7 +109,7 @@ struct RegistrationView: View {
             Button {
                 signUP()
             } label: {
-                Text("Sign Up")
+                Text("Sign Up", comment: "Button that leads to create new account")
                     .frame(maxWidth: .infinity)
                     .padding()
                     .foregroundColor(.white)

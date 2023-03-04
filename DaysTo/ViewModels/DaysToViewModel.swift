@@ -59,6 +59,7 @@ class DaysToViewModel: ObservableObject {
                 self.getUserInfo()
                 self.addUser(name: userName, email: userEmail, dateOfBirth: userDateOfBirth)
                 self.sendEmailVerification()
+                self.addEvent(name: userName, description: "", date: userDateOfBirth, isFavorite: true, isRepeated: true)
             }
         }
     }
