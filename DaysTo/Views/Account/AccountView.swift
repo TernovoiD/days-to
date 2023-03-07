@@ -16,8 +16,75 @@ struct AccountView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(spacing: 20) {
+            ZStack {
+                ScrollView {
+                    VStack(spacing: 20) {
+                        Image(systemName: "person")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .glassyFont(textColor: Color(appColorScheme))
+                        VStack(spacing: 10) {
+                            VStack(alignment: .leading, spacing: 5) {
+                                HStack {
+                                    Text(daysToVM.userInfo?.name ?? "username")
+                                        .font(.title2.weight(.black))
+                                        .glassyFont(textColor: .primary)
+                                    Spacer()
+                                    Text(daysToVM.userInfo?.dateOfBirth.simpleDate(formatStyle: "dd MMM Y") ?? "Date of Birth")
+                                }
+                                Text(daysToVM.userInfo?.email ?? "useremail")
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal)
+                            NavigationLink(destination: PasswordChangeView()) {
+                                HStack {
+                                    Label("Change password", systemImage: "lock.open.rotation")
+                                    Spacer()
+                                    Image(systemName: "chevron.right")
+                                }
+                                .padding()
+                                .background(Color.gray.opacity(0.15))
+                                .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                            }
+                            Button {
+                                sendVerificationEmail()
+                            } label: {
+                                HStack {
+                                    Label("Send verification email", systemImage: "checkmark.seal")
+                                    Spacer()
+                                }
+                                .padding()
+                                .background(Color.gray.opacity(0.15))
+                                .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                            }
+                            if verifyEmail {
+                                Text("Verification email was sent to: \(daysToVM.userInfo?.email ?? "error")")
+                                    .font(.caption)
+                                    .foregroundColor(.green)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.horizontal)
+                            }
+                            Button {
+                                showDeleteConfirmationAlert = true
+                            } label: {
+                                HStack {
+                                    Label("Delete account", systemImage: "trash")
+                                    Spacer()
+                                }
+                                .padding()
+                                .foregroundColor(.red)
+                                .background(Color.gray.opacity(0.15))
+                                .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
+                            }
+                        }
+                    }
+                }
+                .padding(.horizontal)
+                .safeAreaInset(edge: .top) {
+                    Color.clear.frame(maxHeight: 60)
+                }
+                
+                VStack {
                     Button {
                         withAnimation(.easeInOut) {
                             daysToVM.showMyAccount = false
@@ -31,74 +98,26 @@ struct AccountView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
                             .frame(maxWidth: .infinity, alignment: .trailing)
                     }
-                    Image(systemName: "person.crop.square.filled.and.at.rectangle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .glassyFont(textColor: Color(appColorScheme))
-                    VStack(spacing: 10) {
-                        Text(daysToVM.userInfo?.name ?? "username")
-                            .font(.title2.weight(.black))
-                            .glassyFont(textColor: .primary)
-                        NavigationLink(destination: PasswordChangeView()) {
-                            HStack {
-                                Label("Change password", systemImage: "lock.open.rotation")
-                                Spacer()
-                                Image(systemName: "chevron.right")
-                            }
-                            .padding()
-                            .background(Color.gray.opacity(0.15))
-                            .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
-                        }
-                        Button {
-                            sendVerificationEmail()
-                        } label: {
-                            HStack {
-                                Label("Send verification email", systemImage: "checkmark.seal")
-                                Spacer()
-                            }
-                            .padding()
-                            .background(Color.gray.opacity(0.15))
-                            .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
-                        }
-                        if verifyEmail {
-                            Text("Verification email was sent to: \(daysToVM.userInfo?.email ?? "error")")
-                                .font(.caption)
-                                .foregroundColor(.green)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .padding(.horizontal)
-                        }
-                        Button {
-                            showDeleteConfirmationAlert = true
-                        } label: {
-                            HStack {
-                                Label("Delete account", systemImage: "trash")
-                                Spacer()
-                            }
-                            .padding()
-                            .foregroundColor(.red)
-                            .background(Color.gray.opacity(0.15))
-                            .clipShape(RoundedRectangle(cornerRadius: 15, style: .continuous))
-                        }
+                    Spacer()
+                }
+                .padding()
+            }
+            .onDisappear {
+                resetPassword = false
+                verifyEmail = false
+            }
+            .alert("This will delete your account", isPresented: $showDeleteConfirmationAlert) {
+                Button("DELETE", role: .destructive) {
+                    withAnimation(.easeInOut) {
+                        daysToVM.deleteUser()
+                        daysToVM.signOut()
+                        daysToVM.reloadWidget()
+                        daysToVM.showMyAccount = false
                     }
                 }
-                .padding(.horizontal)
-                .onDisappear {
-                    resetPassword = false
-                    verifyEmail = false
-                }
-                .alert("This will delete your account", isPresented: $showDeleteConfirmationAlert) {
-                    Button("DELETE", role: .destructive) {
-                        withAnimation(.easeInOut) {
-                            daysToVM.deleteUser()
-                            daysToVM.signOut()
-                            daysToVM.reloadWidget()
-                            daysToVM.showMyAccount = false
-                        }
-                    }
-                }
-                .alert(daysToVM.alertMessage, isPresented: $daysToVM.alert) {
-                    Button("OK", role: .cancel) { daysToVM.alert = false }
-                }
+            }
+            .alert(daysToVM.alertMessage, isPresented: $daysToVM.alert) {
+                Button("OK", role: .cancel) { daysToVM.alert = false }
             }
         }
     }

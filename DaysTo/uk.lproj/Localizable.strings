@@ -26,10 +26,10 @@
 "**DaysTo** is a non-commercial program built as a training project to make our everyday life easier. The application was created using Swift programing language on MVVM architectural pattern with frameworks:" = "**DaysTo** це некомерційня програма що створена як тренувальний проєкт задля полегшення нашого повсякденного життя. Додаток було побудовано мовою програмування **Swift** з використання архітектурного паттерну **MVVM** та бібліотек:";
 
 /* No comment provided by engineer. */
-"%@" = "%@";
+"%@ D" = "%@ Д.";
 
 /* No comment provided by engineer. */
-"%@ D" = "%@ Д.";
+"%@%%" = "%@%%";
 
 /* No comment provided by engineer. */
 "7 Days" = "7 Днів";
@@ -43,8 +43,11 @@
 /* DaysTo instructions Step 3 title */
 "Add Widget" = "Додай віджет";
 
-/* EventPlate Age of Event */
+/* No comment provided by engineer. */
 "Age: %@" = "Вік: %@";
+
+/* No comment provided by engineer. */
+"Age: %lld" = "Вік: %lld";
 
 /* No comment provided by engineer. */
 "Are you shoure to delete this Event?" = "Ви дійсно хочете видалити цю подію?";
@@ -91,14 +94,14 @@
 /* No comment provided by engineer. */
 "Date of birth" = "Дата народження";
 
-/* EventPlate Date of Event */
+/* No comment provided by engineer. */
 "Date: %@" = "Дата: %@";
 
 /* No comment provided by engineer. */
-"Days to: %@" = "Днів до події: %@";
+"Days left: %lld" = "Лишилося днів: %lld";
 
 /* No comment provided by engineer. */
-"Days until next" = "Загальні";
+"Days to: %@" = "Днів до події: %@";
 
 /* No comment provided by engineer. */
 "DaysTo" = "DaysTo";
