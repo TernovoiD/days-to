@@ -37,7 +37,7 @@ struct CreditsView: View {
                 Spacer()
                 VStack(spacing: 2) {
                     Text("DaysTo")
-                    Text("Version 0.1.0")
+                    Text("Version 1.0")
                     Text("Created by Danylo Ternovoi")
                         .font(.headline)
                 }
@@ -46,8 +46,6 @@ struct CreditsView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 25, style: .continuous))
             }
             .padding(.horizontal)
-            .padding(.bottom, 10)
-            .ignoresSafeArea(edges: .bottom)
         }
         .background()
     }
