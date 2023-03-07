@@ -73,6 +73,14 @@ struct EventModel: Identifiable, Codable, Equatable {
         return abs(age)
     }
     
+    var ageInDays: Int {
+        let calendar = Calendar.current
+        let today = calendar.startOfDay(for: Date())
+        let dateOfEvent = calendar.startOfDay(for: date)
+        guard let age = calendar.dateComponents([.day], from: today, to: dateOfEvent).day else { return 999 }
+        return abs(age)
+    }
+    
     
 }
 

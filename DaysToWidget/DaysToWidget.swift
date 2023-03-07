@@ -120,22 +120,31 @@ struct DaysToWidgetEntryView : View {
     
     var progressionRingsView: some View {
         HStack {
-            VStack {
+            VStack(alignment: .center, spacing: 0) {
                 ProgressRingView(allProgress: dateCalculations.getDaysInCurrentMonth(),
                                  leftProgress: dateCalculations.getDaysLeftCurrentMonth(),
-                                 ringSize: 80,
-                                 ringWidth: 15)
+                                 ringSize: 110,
+                                 ringWidth: 10)
                 Text("Month")
+                    .font(.largeTitle.weight(.bold))
+                Text("Days left: \(dateCalculations.getDaysLeftCurrentMonth())")
+                    .font(.subheadline)
+                    .foregroundColor(.white.opacity(0.7))
             }
-            VStack {
+            Spacer()
+            VStack(alignment: .center, spacing: 0) {
                 ProgressRingView(allProgress: dateCalculations.getDaysInCurrentYear(),
                                  leftProgress: dateCalculations.getDaysLeftCurrentYear(),
-                                 ringSize: 80,
-                                 ringWidth: 15)
+                                 ringSize: 110,
+                                 ringWidth: 10)
                 Text("Year")
+                    .font(.largeTitle.weight(.bold))
+                Text("Days left: \(dateCalculations.getDaysLeftCurrentYear())")
+                    .font(.subheadline)
+                    .foregroundColor(.white.opacity(0.7))
             }
         }
-        .padding(5)
+        .padding()
         .glassyFont(textColor: .white)
         .font(.headline.weight(.black))
     }

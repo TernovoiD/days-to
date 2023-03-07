@@ -51,12 +51,13 @@ struct EventRowView: View {
     var panelContent: some View {
         HStack {
             VStack(alignment: .leading, spacing: 5) {
-                HStack {
+                HStack(spacing: 3) {
                     Text(event.name)
                         .animatableFont(size: 18, weight: .heavy, design: .default)
                     if event.isFavorite {
                         Image(systemName: "star.fill")
                             .foregroundColor(.yellow)
+                            .offset(y: -1)
                     }
                 }
                 .font(.headline)
@@ -72,13 +73,16 @@ struct EventRowView: View {
     }
     
     var additionalInfo: some View {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading, spacing: 5) {
-                Text("Date: \(event.date.formatted(date: .abbreviated, time: .omitted))", comment: "EventPlate Date of Event")
-                if !event.isFutureEvent {
-                    Text("Age: \(String(event.age))", comment: "EventPlate Age of Event")
+        HStack(alignment: .bottom) {
+            VStack(alignment: .leading, spacing: 10) {
+                if event.isFutureEvent {
+                    Text("Date: \(event.date.simpleDate(formatStyle: "dd.MM.yyyy"))")
+                } else {
+                    Text("Age: \(event.age)")
+                    Text("Date: \(event.date.simpleDate(formatStyle: "dd.MM.yyyy"))")
                 }
             }
+            .font(.headline)
             Spacer()
             RoundedRectangle(cornerRadius: 1, style: .continuous)
                 .padding(.top, 5)

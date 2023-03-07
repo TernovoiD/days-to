@@ -31,6 +31,10 @@ struct ProgressRingView: View {
         }
     }
     
+    var percent: Double {
+        return Double(allProgress - leftProgress) / Double(allProgress) * 100
+    }
+    
     var body: some View {
         ZStack {
             Circle()
@@ -43,13 +47,12 @@ struct ProgressRingView: View {
                 .rotation3DEffect(.degrees(180), axis: (x: 0, y: 1, z: 0))
                 .foregroundColor(ringColor)
                 .overlay {
-                    Text("\(String(leftProgress))")
+                    Text("\(String(Int(percent)))%")
                         .font(.title3)
                         .foregroundColor(.white)
                 }
         }
         .frame(maxWidth: ringSize, maxHeight: ringSize)
-        .padding()
     }
 }
 

@@ -1,8 +1,8 @@
 /* No comment provided by engineer. */
-"%@" = "%@";
+"%@ D" = "%@ Д.";
 
 /* No comment provided by engineer. */
-"%@ D" = "%@ Д.";
+"%@%%" = "%@%%";
 
 /* No comment provided by engineer. */
 "%lld D" = "%lld Д.";
@@ -12,6 +12,9 @@
 
 /* No comment provided by engineer. */
 "Age: %lld" = "Вік: %lld";
+
+/* No comment provided by engineer. */
+"Days left: %lld" = "Лишилося днів: %lld";
 
 /* No comment provided by engineer. */
 "DaysTo Widget" = "DaysTo Віджет";

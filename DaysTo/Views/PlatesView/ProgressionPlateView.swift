@@ -16,45 +16,42 @@ struct ProgressionPlateView: View {
                 .rotation3DEffect(.degrees(proxy.frame(in: .global).minX / -10), axis: (x: 0, y: 1, z: 0))
                 .shadow(color: Color.black.opacity(0.6), radius: 5, x: 0, y: 5)
                 .blur(radius: abs(proxy.frame(in: .global).minX) / 50)
-                .overlay(
-                    VStack {
-                        Text("Days until next")
-                            .font(.system(size: 40).weight(.black))
-                        Spacer()
-                    }
-                        .foregroundStyle(LinearGradient(colors: [.orange, .white], startPoint: .leading, endPoint: .trailing))
-                        .offset(y: -20)
-                        .offset(x: proxy.frame(in: .global).minX)
-                )
                 .padding()
         }
     }
     
     var plate: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            HStack {
+        HStack {
+            VStack(alignment: .center, spacing: 0) {
                 ProgressRingView(allProgress: daysToVM.daysInCurrentMonth(),
                                  leftProgress: daysToVM.daysLeftInCurrentMonth(),
-                                 ringSize: 60,
-                                 ringWidth: 10)
+                                 ringSize: 110,
+                                 ringWidth: 30)
+                .padding()
                 Text("Month")
+                    .font(.largeTitle.weight(.bold))
+                Text("Days left: \(daysToVM.daysLeftInCurrentMonth())")
+                    .font(.subheadline)
+                    .foregroundColor(.white.opacity(0.7))
             }
-            HStack {
+            Spacer()
+            VStack(alignment: .center, spacing: 0) {
                 ProgressRingView(allProgress: daysToVM.daysInCurrentYear(),
                                  leftProgress: daysToVM.daysLeftInCurrentYear(),
-                                 ringSize: 60,
-                                 ringWidth: 10)
+                                 ringSize: 110,
+                                 ringWidth: 30)
+                .padding()
                 Text("Year")
+                    .font(.largeTitle.weight(.bold))
+                Text("Days left: \(daysToVM.daysLeftInCurrentYear())")
+                    .font(.subheadline)
+                    .foregroundColor(.white.opacity(0.7))
             }
         }
-        .font(.largeTitle.weight(.medium))
-        .padding(.horizontal)
-        .padding(.vertical, 40)
+        .padding()
         .frame(maxWidth: .infinity, alignment: .leading)
         .frame(height: 250)
-        .foregroundStyle(
-            LinearGradient(colors: [.white, .white.opacity(0.7)], startPoint: .leading, endPoint: .trailing)
-        )
+        .glassyFont(textColor: .white)
         .background(
             .ultraThinMaterial
         )
